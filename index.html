@@ -9,7 +9,7 @@
     <style>
         /* PAGE NAVIGATION LOGIC */
         .page { display: none; animation: fadeIn 0.4s ease; }
-        .page.active { display: block; }
+        .page.active { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; }
         
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -71,8 +71,9 @@
         /* PRODUCT GRID */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
+            width: 100%;
             max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
@@ -99,21 +100,9 @@
         }
         .online { background-color: #00ff88; box-shadow: 0 0 10px #00ff88; }
 
-        /* UPDATED HOME VERTICAL CENTERING */
+        /* HOME VERTICAL CENTERING */
         #home {
-            height: 100vh; /* Fill the screen */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Vertical center */
-            align-items: center; /* Horizontal center */
-        }
-
-        #home .section {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            height: 100vh;
             text-align: center;
         }
 
@@ -123,6 +112,19 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-top: 40px;
+        }
+
+        /* MOBILE SUPPORT */
+        @media (max-width: 768px) {
+            .cart-panel { width: 100%; right: -100%; }
+            .btn-red, .btn-outline { 
+                padding: 15px 30px; /* Larger hit area for fingers */
+                width: 100%;
+                font-size: 16px;
+            }
+            .product-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Usually handled by a burger menu, but hiding for space */
+            .title-glow { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -176,7 +178,7 @@
             <h1 class="title-glow">Military <span style="color:var(--red)">Marketplace</span></h1>
             <p class="subtitle">Buy access to the best roblox studio assets</p>
             
-            <div style="display:flex; gap: 20px; justify-content: center; margin: 30px 0;">
+            <div style="display:flex; gap: 20px; justify-content: center; margin: 30px 0; flex-wrap: wrap;">
                 <button onclick="showPage('products')" class="btn-red">Products</button>
                 <a href="https://discord.gg/militarymarket" target="_blank" class="btn-outline" style="text-decoration:none;">Discord</a>
             </div>
@@ -199,15 +201,15 @@
     </div>
 
     <div id="products" class="page">
-        <section class="section">
-            <h2 class="title-glow" style="text-align: center; margin-top: 100px;"><span style="color:var(--red)">Products</span></h2>
+        <section class="section" style="width: 100%;">
+            <h2 class="title-glow" style="text-align: center; margin-top: 40px;"><span style="color:var(--red)">Products</span></h2>
             <div class="product-grid">
                 <div class="product-card glass" style="text-align: center;">
                     <h3>1x Here Ping</h3>
                     <p style="color: #666; font-size: 13px; margin: 10px 0;">Standard advertisement slot.</p>
                     <div style="display:flex; flex-direction: column; align-items: center; gap: 10px;">
                         <span style="color: var(--red); font-weight: bold;">100 R$</span>
-                        <button class="btn-red" style="padding: 8px 25px;" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add</button>
+                        <button class="btn-red" style="padding: 12px 25px;" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add</button>
                     </div>
                 </div>
 
@@ -216,7 +218,7 @@
                     <p style="color: #666; font-size: 13px; margin: 10px 0;">High visibility advertisement slot.</p>
                     <div style="display:flex; flex-direction: column; align-items: center; gap: 10px;">
                         <span style="color: var(--red); font-weight: bold;">200 R$</span>
-                        <button class="btn-red" style="padding: 8px 25px;" onclick="addToCart('1x Everyone Ping', 200, 'https://www.roblox.com/game-pass/837096376')">Add</button>
+                        <button class="btn-red" style="padding: 12px 25px;" onclick="addToCart('1x Everyone Ping', 200, 'https://www.roblox.com/game-pass/837096376')">Add</button>
                     </div>
                 </div>
 
@@ -225,7 +227,7 @@
                     <p style="color: #666; font-size: 13px; margin: 10px 0;">Boosted engagement package.</p>
                     <div style="display:flex; flex-direction: column; align-items: center; gap: 10px;">
                         <span style="color: var(--red); font-weight: bold;">350 R$</span>
-                        <button class="btn-red" style="padding: 8px 25px;" onclick="addToCart('1x Here Ping + Giveaway', 350, 'https://www.roblox.com/game-pass/1645928351')">Add</button>
+                        <button class="btn-red" style="padding: 12px 25px;" onclick="addToCart('1x Here Ping + Giveaway', 350, 'https://www.roblox.com/game-pass/1645928351')">Add</button>
                     </div>
                 </div>
 
@@ -234,7 +236,7 @@
                     <p style="color: #666; font-size: 13px; margin: 10px 0;">Maximum reach advertisement package.</p>
                     <div style="display:flex; flex-direction: column; align-items: center; gap: 10px;">
                         <span style="color: var(--red); font-weight: bold;">500 R$</span>
-                        <button class="btn-red" style="padding: 8px 25px;" onclick="addToCart('1x Everyone Ping + Giveaway', 500, 'https://www.roblox.com/game-pass/1646186376')">Add</button>
+                        <button class="btn-red" style="padding: 12px 25px;" onclick="addToCart('1x Everyone Ping + Giveaway', 500, 'https://www.roblox.com/game-pass/1646186376')">Add</button>
                     </div>
                 </div>
             </div>
@@ -242,9 +244,9 @@
     </div>
 
     <div id="status" class="page">
-        <section class="section" style="text-align: center; margin-top: 150px;">
+        <section class="section" style="text-align: center;">
             <h2 class="title-glow">System <span style="color:var(--red)">Status</span></h2>
-            <div style="max-width: 600px; margin: 40px auto; text-align: left;" class="glass stat-card">
+            <div style="max-width: 600px; width: 90%; margin: 40px auto; text-align: left;" class="glass stat-card">
                 <div style="margin-bottom: 20px; display: flex; justify-content: space-between;">
                     <span>Logging in AUTH</span>
                     <span><span class="status-dot online"></span> In-work</span>
@@ -258,10 +260,10 @@
     </div>
 
     <div id="dashboard" class="page">
-        <section class="section" style="text-align: center; margin-top: 150px;">
+        <section class="section" style="text-align: center;">
             <h2 class="title-glow">User <span style="color:var(--red)">Dashboard</span></h2>
             <p class="subtitle">Please login to view your purchased assets.</p>
-            <button class="btn-red" onclick="toggleModal()">Login Now</button>
+            <button class="btn-red" onclick="toggleModal()" style="max-width: 200px;">Login Now</button>
         </section>
     </div>
 
@@ -335,26 +337,3 @@
             totalLabel.innerText = `${total} R$`;
             lucide.createIcons();
         }
-
-        function checkout() {
-            if (cart.length === 0) {
-                alert("Your cart is empty!");
-                return;
-            }
-            const uniqueLinks = [...new Set(cart.map(item => item.link))];
-            uniqueLinks.forEach(link => {
-                window.open(link, '_blank');
-            });
-            alert("Opening Roblox purchase pages...");
-        }
-
-        function toggleModal() {
-            document.getElementById('loginModal').style.display = 'flex';
-        }
-
-        function closeModal(e) {
-            document.getElementById('loginModal').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
