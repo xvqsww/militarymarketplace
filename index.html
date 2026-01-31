@@ -13,6 +13,18 @@
             -webkit-tap-highlight-color: transparent; 
         }
 
+        /* FORCE DISABLE ANY OUTSIDE SCRIPTS FROM CHANGING COLORS/TEXT */
+        #member-count {
+            all: unset !important;
+            display: block !important;
+            font-size: 2.5rem !important;
+            font-weight: 800 !important;
+            color: #ff0000 !important;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.4) !important;
+            margin-bottom: 5px !important;
+            font-family: inherit !important;
+        }
+
         /* PAGE NAVIGATION LOGIC */
         .page { display: none; animation: fadeIn 0.4s ease; min-height: 100vh; width: 100%; }
         .page.active { display: flex; flex-direction: column; }
@@ -22,10 +34,10 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* SIDE CART PANEL - Responsive width */
+        /* SIDE CART PANEL */
         .cart-panel {
             position: fixed;
-            right: -100%; /* Changed for better mobile hiding */
+            right: -100%; 
             top: 0;
             width: 85%; 
             max-width: 350px;
@@ -44,9 +56,9 @@
         /* BUTTON TOUCH FIX */
         button, .btn-red, .btn-outline, .nav-links a {
             cursor: pointer;
-            touch-action: manipulation; /* Optimizes for mobile taps */
+            touch-action: manipulation;
             position: relative;
-            z-index: 10; /* Ensures buttons are "on top" of background glows */
+            z-index: 10;
         }
 
         /* HOME VERTICAL CENTERING */
@@ -57,18 +69,28 @@
             align-items: center;
             text-align: center;
             flex-grow: 1;
-            padding: 80px 20px; /* Space for nav */
+            padding: 80px 20px;
         }
 
+        /* GRID RECOVERY */
         .stat-grid {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 30px;
+            margin-top: 40px;
         }
 
-        .stat-card { text-align: center; min-width: 120px; padding: 15px; }
+        .stat-card { 
+            text-align: center; 
+            min-width: 160px; 
+            padding: 25px; 
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        .stat-label { font-size: 0.8rem; color: #888; text-transform: uppercase; }
 
         /* PRODUCT GRID */
         .product-grid {
@@ -126,8 +148,16 @@
 
             <div class="stat-grid">
                 <div class="stat-card glass">
-                    <div class="stat-number" id="member-count">135</div>
-                    <div class="stat-label">Customers</div>
+                    <div id="member-count">140</div>
+                    <div class="stat-label">Loyal Customers</div>
+                </div>
+                <div class="stat-card glass">
+                    <div id="member-count" style="color: #ff0000; font-size: 2.5rem; font-weight: 800;">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+                <div class="stat-card glass">
+                    <div id="member-count" style="color: #ff0000; font-size: 2.5rem; font-weight: 800;">4.98★</div>
+                    <div class="stat-label">Rating</div>
                 </div>
             </div>
         </section>
@@ -140,7 +170,7 @@
                 <div class="product-card glass" style="text-align: center;">
                     <h3>1x Here Ping</h3>
                     <p style="color: var(--red); font-weight: bold;">100 R$</p>
-                    <button class="btn-red" onclick="addToCart('1x Here Ping', 100, 'LINK_HERE')">Add to Cart</button>
+                    <button class="btn-red" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add to Cart</button>
                 </div>
             </div>
         </section>
@@ -150,7 +180,6 @@
         lucide.createIcons();
         let cart = [];
 
-        // Navigation Fix
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const targetPage = document.getElementById(pageId);
@@ -161,7 +190,6 @@
             }
         }
 
-        // Cart Toggle Fix
         function toggleCart() {
             const panel = document.getElementById('cartPanel');
             panel.classList.toggle('open');
@@ -170,12 +198,10 @@
         function addToCart(name, price, link) {
             cart.push({ name, price, link });
             updateCartUI();
-            // Optional: toggleCart(); // Auto-open cart on mobile can be annoying, maybe skip
         }
 
         function updateCartUI() {
             document.getElementById('cart-count').innerText = cart.length;
-            // Add logic here to render items in 'cart-items-container'
         }
 
         function checkout() {
@@ -186,18 +212,7 @@
             toggleCart();
         }
 
-        // Discord Sync (Simplified for Total Members)
-        const INVITE_CODE = 'zPFsHvqqqE'; 
-        async function syncDiscord() {
-            try {
-                const res = await fetch(`https://discord.com/api/v9/invites/${INVITE_CODE}?with_counts=true`);
-                const data = await res.json();
-                if (data.approximate_member_count) {
-                    document.getElementById('member-count').innerText = data.approximate_member_count - 36;
-                }
-            } catch (e) { console.log("Sync error"); }
-        }
-        syncDiscord();
+        // DISCORD SYNC REMOVED TO PREVENT NUMBER JUMPING
     </script>
 </body>
 </html>
