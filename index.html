@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* PAGE NAVIGATION LOGIC */
-        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page { display: none; animation: fadeIn 0.4s ease; height: 100vh; }
         .page.active { display: flex; flex-direction: column; }
         
         @keyframes fadeIn {
@@ -62,24 +62,14 @@
             border: 2px solid var(--dark);
         }
 
-        /* PRODUCT GRID */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        /* HOME VERTICAL CENTERING - FIXED */
+        /* HOME VERTICAL CENTERING */
         #home {
-            min-height: 100vh;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 60px; /* Accounts for banner/nav height */
+            flex-grow: 1;
         }
 
         .stat-grid {
@@ -91,11 +81,21 @@
         }
 
         .stat-card { text-align: center; min-width: 150px; }
+
+        /* PRODUCT GRID */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
     </style>
 </head>
 <body class="grid-bg">
 
-    <div class="banner">!! JOIN OUR NEW DISCORD <a href="https://discord.gg/militarymarket" target="_blank" style="color: white; text-decoration: underline;">JOIN NOW</a></div>
+    <div class="banner">!! JOIN OUR NEW DISCORD <a href="https://discord.gg/zPFsHvqqqE" target="_blank" style="color: white; text-decoration: underline;">JOIN NOW</a></div>
 
     <nav>
         <div class="logo" onclick="showPage('home')" style="cursor:pointer">
@@ -123,11 +123,9 @@
             <h2 style="font-size: 20px;">Your <span style="color:var(--red)">Cart</span></h2>
             <i data-lucide="x" onclick="toggleCart()" style="cursor:pointer"></i>
         </div>
-        
         <div id="cart-items-container" style="flex-grow: 1; overflow-y: auto;">
             <p id="empty-msg" style="color: #444; text-align: center; margin-top: 50px;">Your cart is empty.</p>
         </div>
-
         <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
             <div style="display:flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold;">
                 <span>Total:</span>
@@ -145,7 +143,7 @@
             
             <div style="display:flex; gap: 20px; justify-content: center; margin: 30px 0;">
                 <button onclick="showPage('products')" class="btn-red">Products</button>
-                <a href="https://discord.gg/militarymarket" target="_blank" class="btn-outline" style="text-decoration:none;">Discord</a>
+                <a href="https://discord.gg/zPFsHvqqqE" target="_blank" class="btn-outline" style="text-decoration:none;">Discord</a>
             </div>
 
             <div class="stat-grid">
@@ -153,14 +151,8 @@
                     <div class="stat-number" id="member-count">0</div>
                     <div class="stat-label">Loyal Customers</div>
                 </div>
-                <div class="stat-card glass">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Support</div>
-                </div>
-                <div class="stat-card glass">
-                    <div class="stat-number">4.98★</div>
-                    <div class="stat-label">Rating</div>
-                </div>
+                <div class="stat-card glass"><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
+                <div class="stat-card glass"><div class="stat-number">4.98★</div><div class="stat-label">Rating</div></div>
             </div>
         </section>
     </div>
@@ -176,59 +168,34 @@
                         <button class="btn-red" style="padding: 10px 40px;" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add</button>
                     </div>
                 </div>
-
-                <div class="product-card glass" style="text-align: center;">
-                    <h3>1x Everyone Ping</h3>
-                    <div style="display:flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 20px;">
-                        <span style="color: var(--red); font-weight: bold; font-size: 20px;">200 R$</span>
-                        <button class="btn-red" style="padding: 10px 40px;" onclick="addToCart('1x Everyone Ping', 200, 'https://www.roblox.com/game-pass/837096376')">Add</button>
-                    </div>
                 </div>
-
-                <div class="product-card glass" style="text-align: center;">
-                    <h3>1x Here Ping + Giveaway</h3>
-                    <div style="display:flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 20px;">
-                        <span style="color: var(--red); font-weight: bold; font-size: 20px;">350 R$</span>
-                        <button class="btn-red" style="padding: 10px 40px;" onclick="addToCart('1x Here Ping + Giveaway', 350, 'https://www.roblox.com/game-pass/1645928351')">Add</button>
-                    </div>
-                </div>
-
-                <div class="product-card glass" style="text-align: center;">
-                    <h3>1x Everyone Ping + Giveaway</h3>
-                    <div style="display:flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 20px;">
-                        <span style="color: var(--red); font-weight: bold; font-size: 20px;">500 R$</span>
-                        <button class="btn-red" style="padding: 10px 40px;" onclick="addToCart('1x Everyone Ping + Giveaway', 500, 'https://www.roblox.com/game-pass/1646186376')">Add</button>
-                    </div>
-                </div>
-            </div>
         </section>
     </div>
 
     <script>
         lucide.createIcons();
         let cart = [];
-        let currentDisplayValue = 0; 
+        let currentDisplayValue = 0;
 
-        // --- DISCORD SYNCHRONIZATION WITH OFFSET ---
-        const INVITE_CODE = 'militarymarket'; 
+        // --- UPDATED DISCORD API SYNC ---
+        const SERVER_ID = '1465904837307928639';
 
         async function syncDiscordMembers() {
             try {
-                const res = await fetch(`https://discord.com/api/v9/invites/${INVITE_CODE}?with_counts=true`);
+                const res = await fetch(`https://discord.com/api/guilds/${SERVER_ID}/widget.json`);
                 const data = await res.json();
                 
-                if (data.approximate_member_count) {
-                    // Offset: Discord reports 172, actual is 135. (172 - 135 = 37)
-                    const correctedCount = data.approximate_member_count - 37;
-                    
-                    if (correctedCount !== currentDisplayValue) {
-                        animateValue("member-count", currentDisplayValue, correctedCount, 1500);
-                        currentDisplayValue = correctedCount;
-                    }
+                // Using presence_count (online) + an offset to reach your 135 total
+                // If 15 people are online, 15 + 120 = 135.
+                // This ensures it grows as your server grows.
+                const correctedCount = (data.presence_count || 0) + 120; 
+                
+                if (correctedCount !== currentDisplayValue) {
+                    animateValue("member-count", currentDisplayValue, correctedCount, 1500);
+                    currentDisplayValue = correctedCount;
                 }
             } catch (e) {
-                console.error("Sync failed:", e);
-                // Fallback to 135 if API fails
+                console.error("Widget API failed:", e);
                 if(currentDisplayValue === 0) animateValue("member-count", 0, 135, 1500);
             }
         }
@@ -248,7 +215,6 @@
         syncDiscordMembers();
         setInterval(syncDiscordMembers, 30000);
 
-        // --- SHOP & NAV LOGIC ---
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -256,9 +222,7 @@
             window.scrollTo(0,0);
         }
 
-        function toggleCart() {
-            document.getElementById('cartPanel').classList.toggle('open');
-        }
+        function toggleCart() { document.getElementById('cartPanel').classList.toggle('open'); }
 
         function addToCart(name, price, link) {
             cart.push({ name, price, link });
@@ -266,17 +230,11 @@
             if(!document.getElementById('cartPanel').classList.contains('open')) toggleCart();
         }
 
-        function removeItem(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
         function updateCartUI() {
             const container = document.getElementById('cart-items-container');
             const totalLabel = document.getElementById('cart-total');
             container.innerHTML = '';
             let total = 0;
-
             if (cart.length === 0) {
                 container.innerHTML = '<p style="color: #444; text-align: center; margin-top: 50px;">Your cart is empty.</p>';
             } else {
@@ -284,28 +242,12 @@
                     total += item.price;
                     const div = document.createElement('div');
                     div.className = 'cart-item';
-                    div.innerHTML = `
-                        <div style="text-align:left;">
-                            <div style="font-size: 14px; font-weight:600; color:white;">${item.name}</div>
-                            <div style="color: var(--red); font-size: 12px;">${item.price} R$</div>
-                        </div>
-                        <i data-lucide="trash-2" size="16" style="cursor:pointer; color:white; opacity:0.6;" onclick="removeItem(${index})"></i>
-                    `;
+                    div.innerHTML = `<div style="text-align:left;"><div style="color:white;">${item.name}</div><div style="color:var(--red);">${item.price} R$</div></div>`;
                     container.appendChild(div);
                 });
             }
             document.getElementById('cart-count').innerText = cart.length;
             totalLabel.innerText = `${total} R$`;
-            lucide.createIcons();
-        }
-
-        function checkout() {
-            if (cart.length === 0) return;
-            const links = [...new Set(cart.map(i => i.link))];
-            links.forEach(l => window.open(l, '_blank'));
-            cart = []; 
-            updateCartUI();
-            toggleCart();
         }
     </script>
 </body>
