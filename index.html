@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* MOBILE TAPPING & SCROLL FIXES */
+        /* MOBILE & CLICK FIXES */
         html, body { 
             overflow-x: hidden; 
             -webkit-tap-highlight-color: transparent; 
@@ -16,14 +16,12 @@
             height: 100%;
         }
 
-        /* NAVIGATION & BUTTONS POSITIONS */
-        nav { z-index: 1500; position: fixed; top: 0; width: 100%; }
-
+        /* Ensure buttons are always on top and clickable */
         button, .btn-red, .btn-outline, .nav-links a, .logo {
             cursor: pointer;
             touch-action: manipulation;
             position: relative;
-            z-index: 10;
+            z-index: 50;
         }
 
         /* PAGE SYSTEM */
@@ -41,34 +39,32 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* CENTERING HOME SCREEN */
+        /* CENTERED HOME LAYOUT */
         #home {
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 60px; /* Offset for nav */
+            padding: 20px;
         }
 
-        /* SIDE CART */
-        .cart-panel {
-            position: fixed;
-            right: -110%; 
-            top: 0;
-            width: 85%; 
-            max-width: 350px;
-            height: 100%;
-            background: rgba(10, 10, 15, 0.98);
-            backdrop-filter: blur(20px);
-            border-left: 1px solid rgba(255, 0, 0, 0.2);
-            z-index: 2000;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
+        /* RESPONSIVE NAV */
+        nav { 
+            z-index: 1000; 
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
         }
-        .cart-panel.open { right: 0; }
 
-        /* PRODUCT GRID RESPONSIVENESS */
+        /* STATS LOCK */
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--red);
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -80,8 +76,7 @@
 
         @media (max-width: 600px) {
             .title-glow { font-size: 2.2rem; }
-            .product-grid { grid-template-columns: 1fr; padding-top: 100px; }
-            .stat-card { width: 90%; }
+            .product-grid { padding-top: 100px; }
         }
     </style>
 </head>
@@ -93,14 +88,12 @@
         <div class="logo" onclick="showPage('home')">
             <img src="main.png" alt="Logo" style="height: 35px;">
         </div>
-
         <div class="nav-links">
             <a href="javascript:void(0)" onclick="showPage('home')">Home</a>
             <a href="javascript:void(0)" onclick="showPage('products')">Products</a>
         </div>
-
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <div onclick="toggleCart()" style="cursor:pointer; position: relative; padding: 5px;">
+        <div style="display: flex; gap: 15px; padding-right: 20px;">
+            <div onclick="toggleCart()" style="cursor:pointer; position: relative;">
                 <i data-lucide="shopping-cart"></i>
                 <span id="cart-count" class="cart-badge">0</span>
             </div>
@@ -113,14 +106,14 @@
             <h1 class="title-glow">Military <span style="color:var(--red)">Marketplace</span></h1>
             <p class="subtitle">Access the best roblox studio assets</p>
             
-            <div style="display:flex; gap: 15px; justify-content: center; margin: 25px 0;">
+            <div style="display:flex; gap: 15px; justify-content: center; margin: 30px 0;">
                 <button onclick="showPage('products')" class="btn-red">Products</button>
                 <button onclick="window.open('https://discord.gg/zPFsHvqqqE', '_blank')" class="btn-outline">Discord</button>
             </div>
 
             <div class="stat-grid">
                 <div class="stat-card glass">
-                    <div class="stat-number" id="member-count">135</div>
+                    <div class="stat-number">140</div>
                     <div class="stat-label">Loyal Customers</div>
                 </div>
                 <div class="stat-card glass"><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
@@ -132,7 +125,7 @@
         <div class="product-grid">
             <div class="product-card glass" style="text-align: center;">
                 <h3>1x Here Ping</h3>
-                <p style="color: var(--red); font-weight: bold; font-size: 20px;">100 R$</p>
+                <p style="color: var(--red); font-weight: bold; font-size: 20px; margin: 15px 0;">100 R$</p>
                 <button class="btn-red" style="width: 100%;" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add to Cart</button>
             </div>
             </div>
@@ -141,62 +134,29 @@
     <script>
         lucide.createIcons();
         let cart = [];
-        let currentDisplayValue = 135;
 
-        // --- DYNAMIC DISCORD TOTAL ---
-        const INVITE_CODE = 'zPFsHvqqqE'; 
-
-        async function syncDiscord() {
-            try {
-                const res = await fetch(`https://discord.com/api/v9/invites/${INVITE_CODE}?with_counts=true`);
-                const data = await res.json();
-                
-                if (data.approximate_member_count) {
-                    // Current total reported by API is 171
-                    // 171 - 36 = 135
-                    const dynamicTotal = data.approximate_member_count - 36;
-                    
-                    if (dynamicTotal !== currentDisplayValue) {
-                        animateValue("member-count", currentDisplayValue, dynamicTotal, 1500);
-                        currentDisplayValue = dynamicTotal;
-                    }
-                }
-            } catch (e) {
-                console.log("Discord sync failed, staying at 135.");
-            }
-        }
-
-        function animateValue(id, start, end, duration) {
-            const obj = document.getElementById(id);
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                if (progress < 1) window.requestAnimationFrame(step);
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        // Initialize sync
-        syncDiscord();
-        setInterval(syncDiscord, 60000); // Check every minute
-
-        // Navigation & Cart functions
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0,0);
         }
 
-        function toggleCart() {
-            document.getElementById('cartPanel').classList.toggle('open');
-        }
-
         function addToCart(name, price, link) {
             cart.push({ name, price, link });
             document.getElementById('cart-count').innerText = cart.length;
-            // Add visual feedback for mobile
+            alert(name + " added to cart!");
+        }
+
+        function toggleCart() {
+            // Simplified for now since you want "all in one"
+            if(cart.length === 0) {
+                alert("Your cart is empty!");
+            } else {
+                const links = [...new Set(cart.map(i => i.link))];
+                links.forEach(l => window.open(l, '_blank'));
+                cart = [];
+                document.getElementById('cart-count').innerText = "0";
+            }
         }
     </script>
 </body>
