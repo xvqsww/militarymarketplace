@@ -72,13 +72,14 @@
             padding: 0 20px;
         }
 
-        /* HOME VERTICAL CENTERING */
+        /* HOME VERTICAL CENTERING - FIXED */
         #home {
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
+            padding-top: 60px; /* Accounts for banner/nav height */
         }
 
         .stat-grid {
@@ -109,7 +110,7 @@
         </div>
 
         <div style="display: flex; gap: 20px; position: relative;">
-            <i data-lucide="user" style="cursor:pointer" onclick="toggleModal()"></i>
+            <i data-lucide="user" style="cursor:pointer"></i>
             <div onclick="toggleCart()" style="cursor:pointer; position: relative;">
                 <i data-lucide="shopping-cart"></i>
                 <span id="cart-count" class="cart-badge">0</span>
@@ -149,7 +150,7 @@
 
             <div class="stat-grid">
                 <div class="stat-card glass">
-                    <div class="stat-number" id="member-count">114</div>
+                    <div class="stat-number" id="member-count">0</div>
                     <div class="stat-label">Loyal Customers</div>
                 </div>
                 <div class="stat-card glass">
@@ -206,29 +207,29 @@
     <script>
         lucide.createIcons();
         let cart = [];
-        let currentMembers = 135;
+        let currentDisplayValue = 0; 
 
-        // --- DISCORD SYNCHRONIZATION LOGIC ---
-        // Replace with your invite code (the part after discord.gg/)
+        // --- DISCORD SYNCHRONIZATION WITH OFFSET ---
         const INVITE_CODE = 'militarymarket'; 
 
         async function syncDiscordMembers() {
             try {
-                // Fetching from the public invite API to get 'approximate_member_count'
                 const res = await fetch(`https://discord.com/api/v9/invites/${INVITE_CODE}?with_counts=true`);
                 const data = await res.json();
                 
                 if (data.approximate_member_count) {
-                    const newCount = data.approximate_member_count;
+                    // Offset: Discord reports 172, actual is 135. (172 - 135 = 37)
+                    const correctedCount = data.approximate_member_count - 37;
                     
-                    // Only animate if the number has actually changed
-                    if (newCount !== currentMembers) {
-                        animateValue("member-count", currentMembers, newCount, 1500);
-                        currentMembers = newCount;
+                    if (correctedCount !== currentDisplayValue) {
+                        animateValue("member-count", currentDisplayValue, correctedCount, 1500);
+                        currentDisplayValue = correctedCount;
                     }
                 }
             } catch (e) {
                 console.error("Sync failed:", e);
+                // Fallback to 135 if API fails
+                if(currentDisplayValue === 0) animateValue("member-count", 0, 135, 1500);
             }
         }
 
@@ -244,12 +245,10 @@
             window.requestAnimationFrame(step);
         }
 
-        // Initial Sync
         syncDiscordMembers();
-        // Keep it synchronized every 30 seconds
         setInterval(syncDiscordMembers, 30000);
 
-        // --- SHOP LOGIC ---
+        // --- SHOP & NAV LOGIC ---
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
