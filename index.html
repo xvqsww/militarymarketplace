@@ -71,16 +71,6 @@
         }
 
         .stat-card { text-align: center; min-width: 150px; }
-
-        /* PRODUCT GRID */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
     </style>
 </head>
 <body class="grid-bg">
@@ -147,47 +137,32 @@
         </section>
     </div>
 
-    <div id="products" class="page">
-        <section class="section" style="padding-top: 120px;">
-            <h2 class="title-glow" style="text-align: center;"><span style="color:var(--red)">Products</span></h2>
-            <div class="product-grid">
-                <div class="product-card glass" style="text-align: center;">
-                    <h3>1x Here Ping</h3>
-                    <div style="display:flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 20px;">
-                        <span style="color: var(--red); font-weight: bold; font-size: 20px;">100 R$</span>
-                        <button class="btn-red" style="padding: 10px 40px;" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
     <script>
         lucide.createIcons();
         let cart = [];
         let currentDisplayValue = 135; 
 
-        // --- STABLE TOTAL MEMBER SYNC ---
+        // --- FORCING TOTAL MEMBER SYNC ---
+        // Using the invite code 'zPFsHvqqqE' as it provides total counts
         const INVITE_CODE = 'zPFsHvqqqE'; 
 
         async function syncDiscordMembers() {
             try {
-                // Fetching the invite data which includes 'approximate_member_count' (Total Members)
+                // Fetching from the Invite API with counts enabled
                 const res = await fetch(`https://discord.com/api/v9/invites/${INVITE_CODE}?with_counts=true`);
                 const data = await res.json();
                 
                 if (data.approximate_member_count) {
-                    // This number represents ALL members in the server.
-                    // If Discord reports 171, we subtract the 36 difference to stay at your 135 total.
-                    const correctedTotal = data.approximate_member_count - 36;
+                    // We know Discord reports approx 171. To show 135, the offset is 36.
+                    const totalMembers = data.approximate_member_count - 36;
                     
-                    if (correctedTotal !== currentDisplayValue) {
-                        animateValue("member-count", currentDisplayValue, correctedTotal, 1500);
-                        currentDisplayValue = correctedTotal;
+                    if (totalMembers !== currentDisplayValue) {
+                        animateValue("member-count", currentDisplayValue, totalMembers, 1500);
+                        currentDisplayValue = totalMembers;
                     }
                 }
             } catch (e) {
-                console.error("Total count sync failed:", e);
+                console.error("Sync failed:", e);
             }
         }
 
@@ -203,9 +178,9 @@
             window.requestAnimationFrame(step);
         }
 
-        // Run sync and repeat every 2 minutes (Total count doesn't change as fast as online count)
+        // Sync on load and every 5 minutes (Total count doesn't change as fast as online status)
         syncDiscordMembers();
-        setInterval(syncDiscordMembers, 120000);
+        setInterval(syncDiscordMembers, 300000);
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
