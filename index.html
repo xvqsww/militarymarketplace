@@ -98,11 +98,37 @@
             margin-right: 10px;
         }
         .online { background-color: #00ff88; box-shadow: 0 0 10px #00ff88; }
+
+        /* UPDATED HOME VERTICAL CENTERING */
+        #home {
+            height: 100vh; /* Fill the screen */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertical center */
+            align-items: center; /* Horizontal center */
+        }
+
+        #home .section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .stat-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body class="grid-bg">
 
-    <div class="banner">!! JOIN OUR NEW DISCORD <a href="https://discord.gg/uW2vENBatG" target="_blank" style="color: white; text-decoration: underline;">JOIN NOW</a></div>
+    <div class="banner">!! JOIN OUR NEW DISCORD <a href="https://discord.gg/militarymarket" target="_blank" style="color: white; text-decoration: underline;">JOIN NOW</a></div>
 
     <nav>
         <div class="logo" onclick="showPage('home')" style="cursor:pointer">
@@ -138,79 +164,77 @@
         <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
             <div style="display:flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold;">
                 <span>Total:</span>
-                <span id="cart-total">$0.00</span>
+                <span id="cart-total">0 R$</span>
             </div>
-            <button class="btn-red" style="width: 100%;" onclick="checkout()">Checkout via Linkl</button>
+            <button class="btn-red" style="width: 100%;" onclick="checkout()">Buy Now</button>
         </div>
     </div>
 
     <div id="home" class="page active">
         <div class="hero-glow"></div>
-        <section class="section" style="text-align: center;">
+        <section class="section">
             <h1 class="title-glow">Military <span style="color:var(--red)">Marketplace</span></h1>
             <p class="subtitle">Buy access to the best roblox studio assets</p>
-            <div style="display:flex; gap: 20px; justify-content: center;">
+            
+            <div style="display:flex; gap: 20px; justify-content: center; margin: 30px 0;">
                 <button onclick="showPage('products')" class="btn-red">Products</button>
-                <a href="https://discord.gg/uW2vENBatG" target="_blank" class="btn-outline">Discord</a>
+                <a href="https://discord.gg/militarymarket" target="_blank" class="btn-outline" style="text-decoration:none;">Discord</a>
             </div>
+
             <div class="stat-grid">
-                <div class="stat-card glass"><div class="stat-number">114</div><div class="stat-label">Loyal Customers</div></div>
-                <div class="stat-card glass"><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
-                <div class="stat-card glass"><div class="stat-number">4.98★</div><div class="stat-label">Rating</div></div>
+                <div class="stat-card glass">
+                    <div class="stat-number">114</div>
+                    <div class="stat-label">Loyal Customers</div>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-number">4.98★</div>
+                    <div class="stat-label">Rating</div>
+                </div>
             </div>
         </section>
     </div>
 
     <div id="products" class="page">
         <section class="section">
-            <h2 class="title-glow" style="text-align: center;">Roblox <span style="color:var(--red)">Assets</span></h2>
+            <h2 class="title-glow" style="text-align: center; margin-top: 100px;"><span style="color:var(--red)">Products</span></h2>
             <div class="product-grid">
-                <div class="product-card glass">
-                    <h3>Advanced ACS Kit</h3>
-                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Premium combat system for military games.</p>
-                    <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--red); font-weight: bold;">$15.00</span>
-                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('Advanced ACS Kit', 15.00)">Add</button>
+                <div class="product-card glass" style="text-align: center;">
+                    <h3>1x Here Ping</h3>
+                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Standard advertisement slot.</p>
+                    <div style="display:flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <span style="color: var(--red); font-weight: bold;">100 R$</span>
+                        <button class="btn-red" style="padding: 8px 25px;" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add</button>
                     </div>
                 </div>
-                <div class="product-card glass">
-                    <h3>Border Map V2</h3>
-                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Highly detailed desert border checkpoint.</p>
-                    <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--red); font-weight: bold;">$25.00</span>
-                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('Border Map V2', 25.00)">Add</button>
+
+                <div class="product-card glass" style="text-align: center;">
+                    <h3>1x Everyone Ping</h3>
+                    <p style="color: #666; font-size: 13px; margin: 10px 0;">High visibility advertisement slot.</p>
+                    <div style="display:flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <span style="color: var(--red); font-weight: bold;">200 R$</span>
+                        <button class="btn-red" style="padding: 8px 25px;" onclick="addToCart('1x Everyone Ping', 200, 'https://www.roblox.com/game-pass/837096376')">Add</button>
                     </div>
                 </div>
-                <div class="product-card glass">
-                    <h3>100 Robux Advertisement</h3>
-                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Boost your visibility with basic advertising.</p>
-                    <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--red); font-weight: bold;">$1.25</span>
-                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('100 Robux Advertisement', 1.25)">Add</button>
+
+                <div class="product-card glass" style="text-align: center;">
+                    <h3>1x Here Ping + Giveaway</h3>
+                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Boosted engagement package.</p>
+                    <div style="display:flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <span style="color: var(--red); font-weight: bold;">350 R$</span>
+                        <button class="btn-red" style="padding: 8px 25px;" onclick="addToCart('1x Here Ping + Giveaway', 350, 'https://www.roblox.com/game-pass/1645928351')">Add</button>
                     </div>
                 </div>
-                <div class="product-card glass">
-                    <h3>200 Robux Advertisement</h3>
-                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Enhanced advertisement package for growth.</p>
-                    <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--red); font-weight: bold;">$2.50</span>
-                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('200 Robux Advertisement', 2.50)">Add</button>
-                    </div>
-                </div>
-                <div class="product-card glass">
-                    <h3>350 Robux Advertisement</h3>
-                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Premium placement for maximum game reach.</p>
-                    <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--red); font-weight: bold;">$4.35</span>
-                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('350 Robux Advertisement', 4.35)">Add</button>
-                    </div>
-                </div>
-                <div class="product-card glass">
-                    <h3>500 Robux Advertisement</h3>
-                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Elite advertising tier for top-level games.</p>
-                    <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--red); font-weight: bold;">$6.25</span>
-                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('500 Robux Advertisement', 6.25)">Add</button>
+
+                <div class="product-card glass" style="text-align: center;">
+                    <h3>1x Everyone Ping + Giveaway</h3>
+                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Maximum reach advertisement package.</p>
+                    <div style="display:flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <span style="color: var(--red); font-weight: bold;">500 R$</span>
+                        <button class="btn-red" style="padding: 8px 25px;" onclick="addToCart('1x Everyone Ping + Giveaway', 500, 'https://www.roblox.com/game-pass/1646186376')">Add</button>
                     </div>
                 </div>
             </div>
@@ -218,12 +242,12 @@
     </div>
 
     <div id="status" class="page">
-        <section class="section" style="text-align: center;">
+        <section class="section" style="text-align: center; margin-top: 150px;">
             <h2 class="title-glow">System <span style="color:var(--red)">Status</span></h2>
             <div style="max-width: 600px; margin: 40px auto; text-align: left;" class="glass stat-card">
                 <div style="margin-bottom: 20px; display: flex; justify-content: space-between;">
-                    <span>Authentication API</span>
-                    <span><span class="status-dot online"></span> Operational</span>
+                    <span>Logging in AUTH</span>
+                    <span><span class="status-dot online"></span> In-work</span>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                     <span>Asset Delivery</span>
@@ -234,7 +258,7 @@
     </div>
 
     <div id="dashboard" class="page">
-        <section class="section" style="text-align: center;">
+        <section class="section" style="text-align: center; margin-top: 150px;">
             <h2 class="title-glow">User <span style="color:var(--red)">Dashboard</span></h2>
             <p class="subtitle">Please login to view your purchased assets.</p>
             <button class="btn-red" onclick="toggleModal()">Login Now</button>
@@ -247,7 +271,7 @@
             <button class="btn-outline" style="width:100%; margin-bottom:15px; display:flex; align-items:center; justify-content:center; gap:10px;">
                 <i data-lucide="mail"></i> Continue with Google
             </button>
-            <a href="https://discord.gg/uW2vENBatG" class="btn-red" style="width:100%; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:10px;">
+            <a href="https://discord.gg/militarymarket" class="btn-red" style="width:100%; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:10px;">
                 <i data-lucide="message-square"></i> Continue with Discord
             </a>
         </div>
@@ -256,9 +280,7 @@
     <script>
         lucide.createIcons();
 
-        // CART LOGIC
         let cart = [];
-        const LINKL_URL = "https://link.com/"; // Your Linkl/Linkvertise destination
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -271,8 +293,8 @@
             document.getElementById('cartPanel').classList.toggle('open');
         }
 
-        function addToCart(name, price) {
-            cart.push({ name, price });
+        function addToCart(name, price, link) {
+            cart.push({ name, price, link });
             updateCartUI();
             if(!document.getElementById('cartPanel').classList.contains('open')) toggleCart();
         }
@@ -301,7 +323,7 @@
                     div.innerHTML = `
                         <div>
                             <div style="font-size: 14px; font-weight:600;">${item.name}</div>
-                            <div style="color: var(--red); font-size: 12px;">$${item.price.toFixed(2)}</div>
+                            <div style="color: var(--red); font-size: 12px;">${item.price} R$</div>
                         </div>
                         <i data-lucide="trash-2" size="16" style="cursor:pointer; opacity:0.6;" onclick="removeItem(${index})"></i>
                     `;
@@ -310,7 +332,7 @@
             }
 
             countLabel.innerText = cart.length;
-            totalLabel.innerText = `$${total.toFixed(2)}`;
+            totalLabel.innerText = `${total} R$`;
             lucide.createIcons();
         }
 
@@ -319,8 +341,11 @@
                 alert("Your cart is empty!");
                 return;
             }
-            alert("Redirecting to Linkl...");
-            window.location.href = LINKL_URL;
+            const uniqueLinks = [...new Set(cart.map(item => item.link))];
+            uniqueLinks.forEach(link => {
+                window.open(link, '_blank');
+            });
+            alert("Opening Roblox purchase pages...");
         }
 
         function toggleModal() {
@@ -328,4 +353,8 @@
         }
 
         function closeModal(e) {
-            document.getElementById('loginModal').style
+            document.getElementById('loginModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
