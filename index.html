@@ -7,128 +7,129 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* MOBILE & CLICK FIXES */
+        /* CORE RESET & MOBILE FIXES */
         html, body { 
+            margin: 0; padding: 0; 
             overflow-x: hidden; 
             -webkit-tap-highlight-color: transparent; 
-            margin: 0;
-            padding: 0;
             height: 100%;
+            background-color: #050505;
         }
 
-        /* Ensure buttons are always on top and clickable */
-        button, .btn-red, .btn-outline, .nav-links a, .logo {
-            cursor: pointer;
-            touch-action: manipulation;
-            position: relative;
-            z-index: 50;
-        }
-
-        /* PAGE SYSTEM */
-        .page { 
-            display: none; 
-            animation: fadeIn 0.4s ease; 
-            min-height: 100vh; 
-            width: 100%; 
-            flex-direction: column;
-        }
-        .page.active { display: flex; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* CENTERED HOME LAYOUT */
-        #home {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-
-        /* RESPONSIVE NAV */
+        /* NAVIGATION */
         nav { 
+            position: fixed; top: 0; width: 100%; 
             z-index: 1000; 
-            position: fixed; 
-            top: 0; 
-            width: 100%; 
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 30px; box-sizing: border-box;
             background: rgba(10, 10, 15, 0.8);
             backdrop-filter: blur(10px);
         }
 
-        /* STATS LOCK */
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--red);
-            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        /* BUTTONS & TAPS */
+        .btn-red, .btn-outline, .nav-links a, .logo {
+            cursor: pointer; touch-action: manipulation;
+            position: relative; z-index: 50;
         }
 
+        /* PAGE CENTERED LAYOUT */
+        .page { 
+            display: none; animation: fadeIn 0.4s ease; 
+            min-height: 100vh; width: 100%; 
+            flex-direction: column; justify-content: center; align-items: center;
+            text-align: center;
+        }
+        .page.active { display: flex; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* THE STAT GRID (Restored 3-Column Layout) */
+        .stat-grid {
+            display: flex; gap: 20px; justify-content: center;
+            flex-wrap: wrap; margin-top: 40px; padding: 0 20px;
+        }
+
+        .stat-card {
+            min-width: 160px; padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-number {
+            font-size: 2.2rem; font-weight: 800; color: #ff0000;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.4); margin-bottom: 5px;
+        }
+
+        .stat-label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* PRODUCT GRID */
         .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 120px 20px 40px 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; max-width: 1100px; margin-top: 100px; padding: 40px 20px;
         }
 
         @media (max-width: 600px) {
-            .title-glow { font-size: 2.2rem; }
-            .product-grid { padding-top: 100px; }
+            .stat-card { width: 80%; }
+            .title-glow { font-size: 2rem; }
+            nav { padding: 15px; }
+            .nav-links { display: none; } /* Simplified for mobile */
         }
     </style>
 </head>
 <body class="grid-bg">
 
-    <div class="banner">!! JOIN OUR DISCORD <a href="https://discord.gg/zPFsHvqqqE" target="_blank" style="color: white; text-decoration: underline;">JOIN NOW</a></div>
-
     <nav>
         <div class="logo" onclick="showPage('home')">
             <img src="main.png" alt="Logo" style="height: 35px;">
         </div>
-        <div class="nav-links">
-            <a href="javascript:void(0)" onclick="showPage('home')">Home</a>
-            <a href="javascript:void(0)" onclick="showPage('products')">Products</a>
+        <div class="nav-links" style="display: flex; gap: 25px;">
+            <a href="javascript:void(0)" onclick="showPage('home')" style="color: white; text-decoration: none;">Home</a>
+            <a href="javascript:void(0)" onclick="showPage('products')" style="color: white; text-decoration: none;">Products</a>
         </div>
-        <div style="display: flex; gap: 15px; padding-right: 20px;">
-            <div onclick="toggleCart()" style="cursor:pointer; position: relative;">
-                <i data-lucide="shopping-cart"></i>
-                <span id="cart-count" class="cart-badge">0</span>
-            </div>
+        <div onclick="toggleCart()" style="cursor:pointer; color: white;">
+            <i data-lucide="shopping-cart"></i>
+            <span id="cart-count">0</span>
         </div>
     </nav>
 
     <div id="home" class="page active">
         <div class="hero-glow"></div>
         <section>
-            <h1 class="title-glow">Military <span style="color:var(--red)">Marketplace</span></h1>
-            <p class="subtitle">Access the best roblox studio assets</p>
+            <h1 class="title-glow">Military <span style="color:#ff0000">Marketplace</span></h1>
+            <p class="subtitle" style="color: #888; margin-bottom: 30px;">Access the best roblox studio assets</p>
             
-            <div style="display:flex; gap: 15px; justify-content: center; margin: 30px 0;">
+            <div style="display:flex; gap: 15px; justify-content: center; margin-bottom: 50px;">
                 <button onclick="showPage('products')" class="btn-red">Products</button>
                 <button onclick="window.open('https://discord.gg/zPFsHvqqqE', '_blank')" class="btn-outline">Discord</button>
             </div>
 
             <div class="stat-grid">
-                <div class="stat-card glass">
+                <div class="stat-card">
                     <div class="stat-number">140</div>
                     <div class="stat-label">Loyal Customers</div>
                 </div>
-                <div class="stat-card glass"><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4.98★</div>
+                    <div class="stat-label">Rating</div>
+                </div>
             </div>
         </section>
     </div>
 
     <div id="products" class="page">
         <div class="product-grid">
-            <div class="product-card glass" style="text-align: center;">
-                <h3>1x Here Ping</h3>
-                <p style="color: var(--red); font-weight: bold; font-size: 20px; margin: 15px 0;">100 R$</p>
+            <div class="product-card glass" style="text-align: center; padding: 20px; border: 1px solid rgba(255,0,0,0.1); border-radius: 12px;">
+                <h3 style="color: white;">1x Here Ping</h3>
+                <p style="color: #ff0000; font-weight: bold; font-size: 1.5rem; margin: 20px 0;">100 R$</p>
                 <button class="btn-red" style="width: 100%;" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add to Cart</button>
             </div>
-            </div>
+        </div>
     </div>
 
     <script>
@@ -144,19 +145,20 @@
         function addToCart(name, price, link) {
             cart.push({ name, price, link });
             document.getElementById('cart-count').innerText = cart.length;
+            // Immediate feedback for mobile
             alert(name + " added to cart!");
         }
 
         function toggleCart() {
-            // Simplified for now since you want "all in one"
             if(cart.length === 0) {
-                alert("Your cart is empty!");
-            } else {
-                const links = [...new Set(cart.map(i => i.link))];
-                links.forEach(l => window.open(l, '_blank'));
-                cart = [];
-                document.getElementById('cart-count').innerText = "0";
+                alert("Cart is empty!");
+                return;
             }
+            // Opens the checkout link in a new tab
+            const links = [...new Set(cart.map(i => i.link))];
+            links.forEach(l => window.open(l, '_blank'));
+            cart = [];
+            document.getElementById('cart-count').innerText = "0";
         }
     </script>
 </body>
