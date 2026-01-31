@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* MOBILE & TAPPING FIXES */
+        /* MOBILE TAPPING & SCROLL FIXES */
         html, body { 
             overflow-x: hidden; 
             -webkit-tap-highlight-color: transparent; 
@@ -16,6 +16,9 @@
             height: 100%;
         }
 
+        /* NAVIGATION & BUTTONS POSITIONS */
+        nav { z-index: 1500; position: fixed; top: 0; width: 100%; }
+
         button, .btn-red, .btn-outline, .nav-links a, .logo {
             cursor: pointer;
             touch-action: manipulation;
@@ -23,7 +26,7 @@
             z-index: 10;
         }
 
-        /* PAGE NAVIGATION */
+        /* PAGE SYSTEM */
         .page { 
             display: none; 
             animation: fadeIn 0.4s ease; 
@@ -38,16 +41,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* HOME SCREEN LAYOUT (Centered) */
+        /* CENTERING HOME SCREEN */
         #home {
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
+            padding-top: 60px; /* Offset for nav */
         }
 
-        /* SIDE CART PANEL (Responsive) */
+        /* SIDE CART */
         .cart-panel {
             position: fixed;
             right: -110%; 
@@ -63,46 +65,10 @@
             padding: 25px;
             display: flex;
             flex-direction: column;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
         }
         .cart-panel.open { right: 0; }
 
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--red);
-            color: white;
-            font-size: 10px;
-            min-width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-weight: bold;
-            border: 2px solid var(--dark);
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 12px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-        }
-
-        /* GRIDS */
-        .stat-grid {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
+        /* PRODUCT GRID RESPONSIVENESS */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -113,8 +79,9 @@
         }
 
         @media (max-width: 600px) {
-            .title-glow { font-size: 2.5rem; }
-            .product-grid { grid-template-columns: 1fr; }
+            .title-glow { font-size: 2.2rem; }
+            .product-grid { grid-template-columns: 1fr; padding-top: 100px; }
+            .stat-card { width: 90%; }
         }
     </style>
 </head>
@@ -122,9 +89,9 @@
 
     <div class="banner">!! JOIN OUR DISCORD <a href="https://discord.gg/zPFsHvqqqE" target="_blank" style="color: white; text-decoration: underline;">JOIN NOW</a></div>
 
-    <nav style="z-index: 1500;">
+    <nav>
         <div class="logo" onclick="showPage('home')">
-            <img src="main.png" alt="Military Marketplace" style="height: 40px;">
+            <img src="main.png" alt="Logo" style="height: 35px;">
         </div>
 
         <div class="nav-links">
@@ -132,8 +99,7 @@
             <a href="javascript:void(0)" onclick="showPage('products')">Products</a>
         </div>
 
-        <div style="display: flex; gap: 20px; align-items: center;">
-            <i data-lucide="user" style="cursor:pointer"></i>
+        <div style="display: flex; gap: 15px; align-items: center;">
             <div onclick="toggleCart()" style="cursor:pointer; position: relative; padding: 5px;">
                 <i data-lucide="shopping-cart"></i>
                 <span id="cart-count" class="cart-badge">0</span>
@@ -141,32 +107,13 @@
         </div>
     </nav>
 
-    <div id="cartPanel" class="cart-panel">
-        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-            <h2 style="font-size: 20px; color: white;">Your <span style="color:var(--red)">Cart</span></h2>
-            <div onclick="toggleCart()" style="cursor:pointer; padding: 5px;"><i data-lucide="x" style="color: white;"></i></div>
-        </div>
-        
-        <div id="cart-items-container" style="flex-grow: 1; overflow-y: auto;">
-            <p id="empty-msg" style="color: #666; text-align: center; margin-top: 50px;">Your cart is empty.</p>
-        </div>
-
-        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-            <div style="display:flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: white;">
-                <span>Total:</span>
-                <span id="cart-total">0 R$</span>
-            </div>
-            <button class="btn-red" style="width: 100%; padding: 15px;" onclick="checkout()">Buy Now</button>
-        </div>
-    </div>
-
     <div id="home" class="page active">
         <div class="hero-glow"></div>
         <section>
             <h1 class="title-glow">Military <span style="color:var(--red)">Marketplace</span></h1>
-            <p class="subtitle">Buy access to the best roblox studio assets</p>
+            <p class="subtitle">Access the best roblox studio assets</p>
             
-            <div style="display:flex; gap: 15px; justify-content: center; margin: 30px 0;">
+            <div style="display:flex; gap: 15px; justify-content: center; margin: 25px 0;">
                 <button onclick="showPage('products')" class="btn-red">Products</button>
                 <button onclick="window.open('https://discord.gg/zPFsHvqqqE', '_blank')" class="btn-outline">Discord</button>
             </div>
@@ -177,7 +124,6 @@
                     <div class="stat-label">Loyal Customers</div>
                 </div>
                 <div class="stat-card glass"><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
-                <div class="stat-card glass"><div class="stat-number">4.98★</div><div class="stat-label">Rating</div></div>
             </div>
         </section>
     </div>
@@ -186,33 +132,10 @@
         <div class="product-grid">
             <div class="product-card glass" style="text-align: center;">
                 <h3>1x Here Ping</h3>
-                <div style="margin: 20px 0;">
-                    <span style="color: var(--red); font-weight: bold; font-size: 22px;">100 R$</span>
-                </div>
+                <p style="color: var(--red); font-weight: bold; font-size: 20px;">100 R$</p>
                 <button class="btn-red" style="width: 100%;" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add to Cart</button>
             </div>
-            <div class="product-card glass" style="text-align: center;">
-                <h3>1x Everyone Ping</h3>
-                <div style="margin: 20px 0;">
-                    <span style="color: var(--red); font-weight: bold; font-size: 22px;">200 R$</span>
-                </div>
-                <button class="btn-red" style="width: 100%;" onclick="addToCart('1x Everyone Ping', 200, 'https://www.roblox.com/game-pass/837096376')">Add to Cart</button>
             </div>
-            <div class="product-card glass" style="text-align: center;">
-                <h3>1x Here Ping + Giveaway</h3>
-                <div style="margin: 20px 0;">
-                    <span style="color: var(--red); font-weight: bold; font-size: 22px;">350 R$</span>
-                </div>
-                <button class="btn-red" style="width: 100%;" onclick="addToCart('1x Here Ping + Giveaway', 350, 'https://www.roblox.com/game-pass/1645928351')">Add to Cart</button>
-            </div>
-            <div class="product-card glass" style="text-align: center;">
-                <h3>1x Everyone Ping + Giveaway</h3>
-                <div style="margin: 20px 0;">
-                    <span style="color: var(--red); font-weight: bold; font-size: 22px;">500 R$</span>
-                </div>
-                <button class="btn-red" style="width: 100%;" onclick="addToCart('1x Everyone Ping + Giveaway', 500, 'https://www.roblox.com/game-pass/1646186376')">Add to Cart</button>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -220,22 +143,27 @@
         let cart = [];
         let currentDisplayValue = 135;
 
-        // --- DISCORD TOTAL MEMBER SYNC ---
+        // --- DYNAMIC DISCORD TOTAL ---
         const INVITE_CODE = 'zPFsHvqqqE'; 
 
-        async function syncDiscordMembers() {
+        async function syncDiscord() {
             try {
                 const res = await fetch(`https://discord.com/api/v9/invites/${INVITE_CODE}?with_counts=true`);
                 const data = await res.json();
+                
                 if (data.approximate_member_count) {
-                    // Offset based on your current 135 total vs API report
-                    const correctedTotal = data.approximate_member_count - 36;
-                    if (correctedTotal !== currentDisplayValue) {
-                        animateValue("member-count", currentDisplayValue, correctedTotal, 1500);
-                        currentDisplayValue = correctedTotal;
+                    // Current total reported by API is 171
+                    // 171 - 36 = 135
+                    const dynamicTotal = data.approximate_member_count - 36;
+                    
+                    if (dynamicTotal !== currentDisplayValue) {
+                        animateValue("member-count", currentDisplayValue, dynamicTotal, 1500);
+                        currentDisplayValue = dynamicTotal;
                     }
                 }
-            } catch (e) { console.error("Sync error"); }
+            } catch (e) {
+                console.log("Discord sync failed, staying at 135.");
+            }
         }
 
         function animateValue(id, start, end, duration) {
@@ -250,14 +178,14 @@
             window.requestAnimationFrame(step);
         }
 
-        syncDiscordMembers();
-        setInterval(syncDiscordMembers, 120000);
+        // Initialize sync
+        syncDiscord();
+        setInterval(syncDiscord, 60000); // Check every minute
 
-        // --- CORE NAVIGATION ---
+        // Navigation & Cart functions
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            if(document.getElementById('cartPanel').classList.contains('open')) toggleCart();
             window.scrollTo(0,0);
         }
 
@@ -265,54 +193,10 @@
             document.getElementById('cartPanel').classList.toggle('open');
         }
 
-        // --- CART LOGIC ---
         function addToCart(name, price, link) {
             cart.push({ name, price, link });
-            updateCartUI();
-            if(!document.getElementById('cartPanel').classList.contains('open')) toggleCart();
-        }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const container = document.getElementById('cart-items-container');
-            const totalLabel = document.getElementById('cart-total');
-            const cartBadge = document.getElementById('cart-count');
-            container.innerHTML = '';
-            let total = 0;
-
-            if (cart.length === 0) {
-                container.innerHTML = '<p style="color: #666; text-align: center; margin-top: 50px;">Your cart is empty.</p>';
-            } else {
-                cart.forEach((item, index) => {
-                    total += item.price;
-                    const div = document.createElement('div');
-                    div.className = 'cart-item';
-                    div.innerHTML = `
-                        <div style="text-align:left;">
-                            <div style="color:white; font-size:14px; font-weight:bold;">${item.name}</div>
-                            <div style="color:var(--red); font-size:12px;">${item.price} R$</div>
-                        </div>
-                        <i data-lucide="trash-2" size="16" style="cursor:pointer; color:white; opacity:0.6;" onclick="removeItem(${index})"></i>
-                    `;
-                    container.appendChild(div);
-                });
-            }
-            cartBadge.innerText = cart.length;
-            totalLabel.innerText = `${total} R$`;
-            lucide.createIcons();
-        }
-
-        function checkout() {
-            if (cart.length === 0) return;
-            const links = [...new Set(cart.map(i => i.link))];
-            links.forEach(l => window.open(l, '_blank'));
-            cart = []; 
-            updateCartUI();
-            toggleCart();
+            document.getElementById('cart-count').innerText = cart.length;
+            // Add visual feedback for mobile
         }
     </script>
 </body>
