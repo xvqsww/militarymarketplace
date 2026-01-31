@@ -7,158 +7,105 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* CORE RESET & MOBILE FIXES */
-        html, body { 
-            margin: 0; padding: 0; 
-            overflow-x: hidden; 
-            -webkit-tap-highlight-color: transparent; 
-            height: 100%;
-            background-color: #050505;
+        /* FORCE DISABLE ANY OUTSIDE SCRIPTS FROM CHANGING COLORS/TEXT */
+        #member-count-box {
+            all: unset;
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ff0000 !important;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            margin-bottom: 5px;
+            font-family: sans-serif;
         }
 
-        /* NAVIGATION */
-        nav { 
-            position: fixed; top: 0; width: 100%; 
-            z-index: 1000; 
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 30px; box-sizing: border-box;
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(10px);
-        }
-
-        /* BUTTONS & TAPS */
-        .btn-red, .btn-outline, .nav-links a, .logo {
-            cursor: pointer; touch-action: manipulation;
-            position: relative; z-index: 50;
-        }
-
-        /* PAGE CENTERED LAYOUT */
-        .page { 
-            display: none; animation: fadeIn 0.4s ease; 
-            min-height: 100vh; width: 100%; 
-            flex-direction: column; justify-content: center; align-items: center;
-            text-align: center;
-        }
-        .page.active { display: flex; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* THE STAT GRID (Restored 3-Column Layout) */
+        /* LAYOUT RECOVERY */
         .stat-grid {
-            display: flex; gap: 20px; justify-content: center;
-            flex-wrap: wrap; margin-top: 40px; padding: 0 20px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
         }
 
         .stat-card {
-            min-width: 160px; padding: 25px;
+            min-width: 160px;
+            padding: 25px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 0, 0, 0.1);
             border-radius: 12px;
-            transition: transform 0.3s ease;
+            text-align: center;
         }
 
-        .stat-number {
-            font-size: 2.2rem; font-weight: 800; color: #ff0000;
-            text-shadow: 0 0 15px rgba(255, 0, 0, 0.4); margin-bottom: 5px;
-        }
-
-        .stat-label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* PRODUCT GRID */
-        .product-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; max-width: 1100px; margin-top: 100px; padding: 40px 20px;
-        }
-
-        @media (max-width: 600px) {
-            .stat-card { width: 80%; }
-            .title-glow { font-size: 2rem; }
-            nav { padding: 15px; }
-            .nav-links { display: none; } /* Simplified for mobile */
+        /* MOBILE TOUCH RECOVERY */
+        button, a, .logo {
+            touch-action: manipulation;
+            cursor: pointer;
         }
     </style>
 </head>
 <body class="grid-bg">
 
-    <nav>
-        <div class="logo" onclick="showPage('home')">
+    <nav style="position: fixed; top: 0; width: 100%; z-index: 9999; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); box-sizing: border-box;">
+        <div class="logo" onclick="location.reload()">
             <img src="main.png" alt="Logo" style="height: 35px;">
         </div>
-        <div class="nav-links" style="display: flex; gap: 25px;">
-            <a href="javascript:void(0)" onclick="showPage('home')" style="color: white; text-decoration: none;">Home</a>
-            <a href="javascript:void(0)" onclick="showPage('products')" style="color: white; text-decoration: none;">Products</a>
+        <div style="display: flex; gap: 20px;">
+            <a href="#" style="color: white; text-decoration: none;" onclick="showPage('home')">Home</a>
+            <a href="#" style="color: white; text-decoration: none;" onclick="showPage('products')">Products</a>
         </div>
-        <div onclick="toggleCart()" style="cursor:pointer; color: white;">
+        <div style="color: white; cursor: pointer;" onclick="alert('Cart logic ready!')">
             <i data-lucide="shopping-cart"></i>
-            <span id="cart-count">0</span>
         </div>
     </nav>
 
-    <div id="home" class="page active">
-        <div class="hero-glow"></div>
-        <section>
-            <h1 class="title-glow">Military <span style="color:#ff0000">Marketplace</span></h1>
-            <p class="subtitle" style="color: #888; margin-bottom: 30px;">Access the best roblox studio assets</p>
-            
-            <div style="display:flex; gap: 15px; justify-content: center; margin-bottom: 50px;">
-                <button onclick="showPage('products')" class="btn-red">Products</button>
-                <button onclick="window.open('https://discord.gg/zPFsHvqqqE', '_blank')" class="btn-outline">Discord</button>
-            </div>
+    <div id="home" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; text-align: center; padding-top: 50px;">
+        <h1 class="title-glow" style="font-size: 3.5rem; margin: 0;">Military <span style="color: #ff0000;">Marketplace</span></h1>
+        <p style="color: #888; margin: 10px 0 30px 0;">Access the best roblox studio assets</p>
+        
+        <div style="display: flex; gap: 15px; margin-bottom: 50px;">
+            <button onclick="showPage('products')" style="background: #ff0000; color: white; border: none; padding: 12px 30px; border-radius: 5px; font-weight: bold; cursor: pointer;">PRODUCTS</button>
+            <button onclick="window.open('https://discord.gg/zPFsHvqqqE')" style="background: transparent; color: white; border: 1px solid #333; padding: 12px 30px; border-radius: 5px; cursor: pointer;">DISCORD</button>
+        </div>
 
-            <div class="stat-grid">
-                <div class="stat-card">
-                    <div class="stat-number">140</div>
-                    <div class="stat-label">Loyal Customers</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Support</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">4.98★</div>
-                    <div class="stat-label">Rating</div>
-                </div>
+        <div class="stat-grid">
+            <div class="stat-card">
+                <span id="member-count-box">140</span>
+                <div style="color: #666; font-size: 12px; text-transform: uppercase;">Loyal Customers</div>
             </div>
-        </section>
+            <div class="stat-card">
+                <div style="font-size: 2.5rem; font-weight: 800; color: #ff0000;">24/7</div>
+                <div style="color: #666; font-size: 12px; text-transform: uppercase;">Support</div>
+            </div>
+            <div class="stat-card">
+                <div style="font-size: 2.5rem; font-weight: 800; color: #ff0000;">4.98★</div>
+                <div style="color: #666; font-size: 12px; text-transform: uppercase;">Rating</div>
+            </div>
+        </div>
     </div>
 
-    <div id="products" class="page">
-        <div class="product-grid">
-            <div class="product-card glass" style="text-align: center; padding: 20px; border: 1px solid rgba(255,0,0,0.1); border-radius: 12px;">
+    <div id="products" style="display: none; padding-top: 120px; text-align: center;">
+        <h2 style="color: white; font-size: 2.5rem;">Our <span style="color: #ff0000;">Products</span></h2>
+        <div style="display: flex; justify-content: center; padding: 40px;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,0,0,0.1); padding: 30px; border-radius: 15px; width: 300px;">
                 <h3 style="color: white;">1x Here Ping</h3>
-                <p style="color: #ff0000; font-weight: bold; font-size: 1.5rem; margin: 20px 0;">100 R$</p>
-                <button class="btn-red" style="width: 100%;" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add to Cart</button>
+                <p style="color: #ff0000; font-size: 1.5rem; font-weight: bold;">100 R$</p>
+                <button style="background: #ff0000; color: white; border: none; width: 100%; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold;">ADD TO CART</button>
             </div>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
-        let cart = [];
 
         function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        function addToCart(name, price, link) {
-            cart.push({ name, price, link });
-            document.getElementById('cart-count').innerText = cart.length;
-            // Immediate feedback for mobile
-            alert(name + " added to cart!");
-        }
-
-        function toggleCart() {
-            if(cart.length === 0) {
-                alert("Cart is empty!");
-                return;
+            if(pageId === 'home') {
+                document.getElementById('home').style.display = 'flex';
+                document.getElementById('products').style.display = 'none';
+            } else {
+                document.getElementById('home').style.display = 'none';
+                document.getElementById('products').style.display = 'block';
             }
-            // Opens the checkout link in a new tab
-            const links = [...new Set(cart.map(i => i.link))];
-            links.forEach(l => window.open(l, '_blank'));
-            cart = [];
-            document.getElementById('cart-count').innerText = "0";
         }
     </script>
 </body>
