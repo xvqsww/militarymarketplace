@@ -72,28 +72,7 @@
             padding: 0 20px;
         }
 
-        /* AUTH MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1100;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .status-dot {
-            height: 10px;
-            width: 10px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 10px;
-        }
-        .online { background-color: #00ff88; box-shadow: 0 0 10px #00ff88; }
-
-        /* HOME VERTICAL CENTERING FIX */
+        /* HOME VERTICAL CENTERING */
         #home {
             min-height: 100vh;
             display: flex;
@@ -170,7 +149,7 @@
 
             <div class="stat-grid">
                 <div class="stat-card glass">
-                    <div class="stat-number" id="member-count">0</div>
+                    <div class="stat-number" id="member-count">114</div>
                     <div class="stat-label">Loyal Customers</div>
                 </div>
                 <div class="stat-card glass">
@@ -227,19 +206,29 @@
     <script>
         lucide.createIcons();
         let cart = [];
+        let currentMembers = 135;
 
-        // 1. DISCORD DYNAMIC COUNT LOGIC
-        const DISCORD_ID = '1465904837307928639'; 
+        // --- DISCORD SYNCHRONIZATION LOGIC ---
+        // Replace with your invite code (the part after discord.gg/)
+        const INVITE_CODE = 'militarymarket'; 
 
-        async function updateDiscordStats() {
+        async function syncDiscordMembers() {
             try {
-                const res = await fetch(`https://discord.com/api/guilds/${DISCORD_ID}/widget.json`);
+                // Fetching from the public invite API to get 'approximate_member_count'
+                const res = await fetch(`https://discord.com/api/v9/invites/${INVITE_CODE}?with_counts=true`);
                 const data = await res.json();
-                // We add a base of 100 to make it look like "Loyal Customers" based on server presence
-                let count = (data.presence_count || 0) + 114; 
-                animateValue("member-count", 0, count, 2000);
+                
+                if (data.approximate_member_count) {
+                    const newCount = data.approximate_member_count;
+                    
+                    // Only animate if the number has actually changed
+                    if (newCount !== currentMembers) {
+                        animateValue("member-count", currentMembers, newCount, 1500);
+                        currentMembers = newCount;
+                    }
+                }
             } catch (e) {
-                animateValue("member-count", 0, 114, 2000);
+                console.error("Sync failed:", e);
             }
         }
 
@@ -255,9 +244,12 @@
             window.requestAnimationFrame(step);
         }
 
-        updateDiscordStats();
+        // Initial Sync
+        syncDiscordMembers();
+        // Keep it synchronized every 30 seconds
+        setInterval(syncDiscordMembers, 30000);
 
-        // 2. NAVIGATION & CART LOGIC
+        // --- SHOP LOGIC ---
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -294,7 +286,7 @@
                     const div = document.createElement('div');
                     div.className = 'cart-item';
                     div.innerHTML = `
-                        <div>
+                        <div style="text-align:left;">
                             <div style="font-size: 14px; font-weight:600; color:white;">${item.name}</div>
                             <div style="color: var(--red); font-size: 12px;">${item.price} R$</div>
                         </div>
@@ -309,17 +301,13 @@
         }
 
         function checkout() {
-            if (cart.length === 0) return alert("Cart is empty!");
+            if (cart.length === 0) return;
             const links = [...new Set(cart.map(i => i.link))];
             links.forEach(l => window.open(l, '_blank'));
-            cart = []; // Clear cart after buying
+            cart = []; 
             updateCartUI();
             toggleCart();
         }
-
-        function toggleModal() { document.getElementById('loginModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('loginModal').style.display = 'none'; }
     </script>
 </body>
 </html>
-
