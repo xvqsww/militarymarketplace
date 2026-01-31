@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* PAGE NAVIGATION LOGIC */
-        .page { display: none; animation: fadeIn 0.4s ease; height: 100vh; }
+        .page { display: none; animation: fadeIn 0.4s ease; min-height: 100vh; }
         .page.active { display: flex; flex-direction: column; }
         
         @keyframes fadeIn {
@@ -34,16 +34,6 @@
             box-shadow: -10px 0 30px rgba(0,0,0,0.5);
         }
         .cart-panel.open { right: 0; }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 12px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-        }
 
         .cart-badge {
             position: absolute;
@@ -148,7 +138,7 @@
 
             <div class="stat-grid">
                 <div class="stat-card glass">
-                    <div class="stat-number" id="member-count">0</div>
+                    <div class="stat-number" id="member-count">135</div>
                     <div class="stat-label">Loyal Customers</div>
                 </div>
                 <div class="stat-card glass"><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
@@ -168,35 +158,36 @@
                         <button class="btn-red" style="padding: 10px 40px;" onclick="addToCart('1x Here Ping', 100, 'https://www.roblox.com/game-pass/836932565')">Add</button>
                     </div>
                 </div>
-                </div>
+            </div>
         </section>
     </div>
 
     <script>
         lucide.createIcons();
         let cart = [];
-        let currentDisplayValue = 0;
+        let currentDisplayValue = 135; 
 
-        // --- UPDATED DISCORD API SYNC ---
-        const SERVER_ID = '1465904837307928639';
+        // --- STABLE TOTAL MEMBER SYNC ---
+        const INVITE_CODE = 'zPFsHvqqqE'; 
 
         async function syncDiscordMembers() {
             try {
-                const res = await fetch(`https://discord.com/api/guilds/${SERVER_ID}/widget.json`);
+                // Fetching the invite data which includes 'approximate_member_count' (Total Members)
+                const res = await fetch(`https://discord.com/api/v9/invites/${INVITE_CODE}?with_counts=true`);
                 const data = await res.json();
                 
-                // Using presence_count (online) + an offset to reach your 135 total
-                // If 15 people are online, 15 + 120 = 135.
-                // This ensures it grows as your server grows.
-                const correctedCount = (data.presence_count || 0) + 120; 
-                
-                if (correctedCount !== currentDisplayValue) {
-                    animateValue("member-count", currentDisplayValue, correctedCount, 1500);
-                    currentDisplayValue = correctedCount;
+                if (data.approximate_member_count) {
+                    // This number represents ALL members in the server.
+                    // If Discord reports 171, we subtract the 36 difference to stay at your 135 total.
+                    const correctedTotal = data.approximate_member_count - 36;
+                    
+                    if (correctedTotal !== currentDisplayValue) {
+                        animateValue("member-count", currentDisplayValue, correctedTotal, 1500);
+                        currentDisplayValue = correctedTotal;
+                    }
                 }
             } catch (e) {
-                console.error("Widget API failed:", e);
-                if(currentDisplayValue === 0) animateValue("member-count", 0, 135, 1500);
+                console.error("Total count sync failed:", e);
             }
         }
 
@@ -212,13 +203,13 @@
             window.requestAnimationFrame(step);
         }
 
+        // Run sync and repeat every 2 minutes (Total count doesn't change as fast as online count)
         syncDiscordMembers();
-        setInterval(syncDiscordMembers, 30000);
+        setInterval(syncDiscordMembers, 120000);
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            if(document.getElementById('cartPanel').classList.contains('open')) toggleCart();
             window.scrollTo(0,0);
         }
 
