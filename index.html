@@ -98,6 +98,20 @@
             margin-right: 10px;
         }
         .online { background-color: #00ff88; box-shadow: 0 0 10px #00ff88; }
+
+        /* HOME CENTERING */
+        #home .section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .stat-card {
+            text-align: center;
+        }
     </style>
 </head>
 <body class="grid-bg">
@@ -146,14 +160,14 @@
 
     <div id="home" class="page active">
         <div class="hero-glow"></div>
-        <section class="section" style="text-align: center;">
+        <section class="section">
             <h1 class="title-glow">Military <span style="color:var(--red)">Marketplace</span></h1>
             <p class="subtitle">Buy access to the best roblox studio assets</p>
-            <div style="display:flex; gap: 20px; justify-content: center;">
+            <div style="display:flex; gap: 20px; justify-content: center; margin-bottom: 40px;">
                 <button onclick="showPage('products')" class="btn-red">Products</button>
                 <a href="https://discord.gg/militarymarket" target="_blank" class="btn-outline">Discord</a>
             </div>
-            <div class="stat-grid">
+            <div class="stat-grid" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
                 <div class="stat-card glass"><div class="stat-number">114</div><div class="stat-label">Loyal Customers</div></div>
                 <div class="stat-card glass"><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
                 <div class="stat-card glass"><div class="stat-number">4.98★</div><div class="stat-label">Rating</div></div>
