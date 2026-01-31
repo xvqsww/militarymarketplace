@@ -22,54 +22,82 @@
             overflow-x: hidden;
         }
 
-        /* NAVIGATION - Always on top */
+        /* NAVIGATION - MATCHING SCREENSHOT LAYOUT */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
             height: 80px;
-            z-index: 1000;
+            z-index: 5000;
             background: rgba(10, 10, 15, 0.85);
             backdrop-filter: blur(12px);
             display: flex;
-            justify-content: space-between;
             align-items: center;
             padding: 0 40px;
             border-bottom: 1px solid rgba(255, 0, 0, 0.1);
         }
 
+        /* Nav Links Centered in the available space */
+        .nav-links {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
         .nav-links a {
             color: #ccc;
             text-decoration: none;
-            margin: 0 15px;
             font-size: 14px;
             transition: 0.3s;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .nav-links a:hover { color: var(--red); }
+
+        /* Logo Pinned Left */
+        .logo {
+            position: absolute;
+            left: 40px;
+            cursor: pointer;
+            z-index: 5001;
+        }
+
+        /* Icons Pinned Top Right */
+        .nav-icons {
+            position: absolute;
+            right: 40px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 5001;
+        }
+
+        .nav-icons i {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-icons i:hover { color: var(--red); }
 
         /* PAGE SYSTEM */
         .page { 
             display: none; 
             min-height: 100vh;
             width: 100%;
-            padding-top: 100px; /* Offset for fixed nav */
+            padding-top: 100px;
             position: relative;
+            z-index: 10;
         }
 
         .page.active { 
-            display: block; 
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        /* HOME SPECIFIC CENTERING */
-        #home.active {
-            display: flex;
+            display: flex; 
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding-top: 0;
+            justify-content: center;
+            animation: fadeIn 0.4s ease forwards;
         }
 
         @keyframes fadeIn {
@@ -77,86 +105,64 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* BUTTONS & INTERACTIVES */
+        /* BUTTONS */
         .btn-red {
             background: var(--red);
             color: white;
             border: none;
-            padding: 12px 28px;
+            padding: 14px 32px;
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
             transition: 0.3s;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
         }
 
-        .btn-red:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 0, 0, 0.5); }
+        .btn-red:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 0, 0.6); }
 
         .btn-outline {
             background: transparent;
             color: white;
             border: 1px solid #444;
-            padding: 12px 28px;
+            padding: 14px 32px;
             border-radius: 4px;
+            font-weight: bold;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: 0.3s;
         }
 
-        .btn-outline:hover { border-color: white; }
+        .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.05); }
 
         /* PRODUCT GRID */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+            width: 90%;
+            margin-top: 40px;
         }
 
-        .product-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .product-card:hover { border-color: var(--red); background: rgba(255,255,255,0.05); }
-
-        /* CART PANEL */
-        .cart-panel {
-            position: fixed;
-            right: -400px;
-            top: 0;
-            width: 350px;
-            height: 100%;
-            background: #0a0a0f;
-            border-left: 1px solid rgba(255, 0, 0, 0.2);
-            z-index: 2000;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .cart-panel.open { right: 0; }
-
-        /* MOBILE FIXES */
+        /* MOBILE SUPPORT */
         @media (max-width: 768px) {
             nav { padding: 0 20px; }
-            .nav-links { display: none; }
-            .cart-panel { width: 100%; right: -100%; }
-            .btn-red, .btn-outline { width: 100%; margin-bottom: 10px; padding: 15px; }
+            .logo { left: 20px; }
+            .nav-icons { right: 20px; }
+            .nav-links { display: none; } /* Hide text links on mobile */
+            .page { padding-top: 80px; }
+            .btn-red, .btn-outline { width: 100%; margin-bottom: 15px; }
         }
 
         /* BACKGROUND ELEMENTS */
         .hero-glow {
             position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255,0,0,0.15) 0%, transparent 70%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,0,0,0.1) 0%, transparent 70%);
             z-index: -1;
             pointer-events: none;
         }
@@ -165,8 +171,8 @@
 <body>
 
     <nav>
-        <div class="logo" onclick="showPage('home')" style="cursor:pointer">
-            <img src="main.png" alt="Logo" style="height: 35px;">
+        <div class="logo" onclick="showPage('home')">
+            <img src="main.png" alt="Logo" style="height: 30px;">
         </div>
 
         <div class="nav-links">
@@ -176,79 +182,53 @@
             <a onclick="showPage('dashboard')">Dashboard</a>
         </div>
 
-        <div style="display: flex; gap: 20px; align-items: center;">
-            <i data-lucide="shopping-cart" style="cursor:pointer" onclick="toggleCart()"></i>
-            <i data-lucide="user" style="cursor:pointer" onclick="showPage('dashboard')"></i>
+        <div class="nav-icons">
+            <i data-lucide="user" onclick="showPage('dashboard')"></i>
+            <div onclick="toggleCart()" style="position: relative;">
+                <i data-lucide="shopping-cart"></i>
+            </div>
         </div>
     </nav>
 
-    <div id="cartPanel" class="cart-panel">
-        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-            <h2>Your <span style="color:var(--red)">Cart</span></h2>
-            <i data-lucide="x" onclick="toggleCart()" style="cursor:pointer"></i>
-        </div>
-        <div id="cart-items" style="flex-grow: 1;">
-            <p style="color: #666; text-align: center; margin-top: 40px;">Cart is currently empty.</p>
-        </div>
-        <button class="btn-red" style="width: 100%;">Checkout</button>
-    </div>
-
     <div id="home" class="page active">
         <div class="hero-glow"></div>
-        <h1 style="font-size: 3.5rem; margin-bottom: 10px;">Military <span style="color:var(--red)">Marketplace</span></h1>
-        <p style="color: #888; margin-bottom: 40px;">Buy access to the best roblox studio assets</p>
-        
-        <div style="display: flex; gap: 20px;">
-            <button class="btn-red" onclick="showPage('products')">PRODUCTS</button>
-            <button class="btn-outline" onclick="window.open('https://discord.gg/militarymarket')">DISCORD</button>
-        </div>
+        <div style="text-align: center;">
+            <h1 style="font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 800; line-height: 1.1;">
+                MILITARY <span style="color:var(--red)">MARKETPLACE</span>
+            </h1>
+            <p style="color: #888; margin: 20px 0 40px; font-size: 1.1rem; letter-spacing: 1px;">
+                Buy access to the best roblox studio assets
+            </p>
+            
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-red" onclick="showPage('products')">PRODUCTS</button>
+                <button class="btn-outline" onclick="window.open('https://discord.gg/militarymarket')">DISCORD</button>
+            </div>
 
-        <div style="display: flex; gap: 40px; margin-top: 60px;">
-            <div style="text-align: center;"><h3>114</h3><p style="color:#666; font-size:12px;">LOYAL CUSTOMERS</p></div>
-            <div style="text-align: center;"><h3>24/7</h3><p style="color:#666; font-size:12px;">SUPPORT</p></div>
-            <div style="text-align: center;"><h3>4.98★</h3><p style="color:#666; font-size:12px;">RATING</p></div>
+            <div style="display: flex; gap: 50px; margin-top: 80px; justify-content: center; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <h3 style="font-size: 1.5rem;">114</h3>
+                    <p style="color:#555; font-size: 0.75rem; font-weight: bold;">LOYAL CUSTOMERS</p>
+                </div>
+                <div style="text-align: center;">
+                    <h3 style="font-size: 1.5rem;">24/7</h3>
+                    <p style="color:#555; font-size: 0.75rem; font-weight: bold;">SUPPORT</p>
+                </div>
+                <div style="text-align: center;">
+                    <h3 style="font-size: 1.5rem;">4.98★</h3>
+                    <p style="color:#555; font-size: 0.75rem; font-weight: bold;">RATING</p>
+                </div>
+            </div>
         </div>
     </div>
 
     <div id="products" class="page">
-        <h2 style="text-align: center; margin-bottom: 40px;">Our <span style="color:var(--red)">Assets</span></h2>
+        <h2 style="font-size: 2.5rem;">OUR <span style="color:var(--red)">PRODUCTS</span></h2>
         <div class="product-grid">
-            <div class="product-card">
-                <h3>1x Here Ping</h3>
-                <p style="color: #666; font-size: 13px; margin: 15px 0;">Standard advertisement slot.</p>
-                <p style="color: var(--red); font-weight: bold; margin-bottom: 20px;">100 R$</p>
-                <button class="btn-red" onclick="addToCart('Here Ping', 100)">Add to Cart</button>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid #222; padding: 40px; border-radius: 8px; text-align: center;">
+                <h3>Product Placeholder</h3>
+                <button class="btn-red" style="margin-top: 20px;">ADD TO CART</button>
             </div>
-            <div class="product-card">
-                <h3>1x Everyone Ping</h3>
-                <p style="color: #666; font-size: 13px; margin: 15px 0;">Maximum reach advertisement.</p>
-                <p style="color: var(--red); font-weight: bold; margin-bottom: 20px;">200 R$</p>
-                <button class="btn-red" onclick="addToCart('Everyone Ping', 200)">Add to Cart</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="status" class="page">
-        <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-            <h2 style="margin-bottom: 40px;">System <span style="color:var(--red)">Status</span></h2>
-            <div style="background: rgba(255,255,255,0.03); padding: 30px; border-radius: 12px; text-align: left;">
-                <div style="display:flex; justify-content:space-between; margin-bottom: 15px;">
-                    <span>Auth Service</span>
-                    <span style="color: #00ff88;">● Online</span>
-                </div>
-                <div style="display:flex; justify-content:space-between;">
-                    <span>Asset Delivery</span>
-                    <span style="color: #00ff88;">● Online</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="dashboard" class="page">
-        <div style="text-align: center;">
-            <h2 style="margin-bottom: 20px;">User <span style="color:var(--red)">Dashboard</span></h2>
-            <p style="color: #666; margin-bottom: 30px;">Login to access your purchased assets.</p>
-            <button class="btn-red">Login with Discord</button>
         </div>
     </div>
 
@@ -256,23 +236,14 @@
         lucide.createIcons();
 
         function showPage(pageId) {
-            // Hide all
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // Show one
             const target = document.getElementById(pageId);
             if(target) target.classList.add('active');
-            // Close cart
-            document.getElementById('cartPanel').classList.remove('open');
             window.scrollTo(0,0);
         }
 
         function toggleCart() {
-            document.getElementById('cartPanel').classList.toggle('open');
-        }
-
-        function addToCart(name, price) {
-            alert(name + " added to cart!");
-            // Logic for cart items can be added here
+            alert("Cart Panel would slide out here!");
         }
     </script>
 </body>
