@@ -4,167 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Military Marketplace</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* BASE STYLES */
         :root {
-            --red: #ff0000;
-            --dark: #0a0a0f;
+            --red: #ff3131;
+            --dark-bg: #050505;
+            --grid-color: rgba(255, 0, 0, 0.05);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        /* THE GRID BACKGROUND FROM IMAGE 1 */
         body {
-            background-color: #050505;
+            background-color: var(--dark-bg);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
             color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow-x: hidden;
         }
 
-        /* NAVIGATION - MATCHING SCREENSHOT LAYOUT */
+        /* NAVIGATION LAYOUT */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 80px;
-            z-index: 5000;
-            background: rgba(10, 10, 15, 0.85);
-            backdrop-filter: blur(12px);
+            height: 70px;
             display: flex;
             align-items: center;
-            padding: 0 40px;
-            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+            padding: 0 50px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* Nav Links Centered in the available space */
-        .nav-links {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-        }
+        .logo { position: absolute; left: 50px; cursor: pointer; }
+        .logo img { height: 30px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); }
 
+        .nav-links { flex: 1; display: flex; justify-content: center; gap: 30px; }
         .nav-links a {
-            color: #ccc;
+            color: #999;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 500;
             transition: 0.3s;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
+        .nav-links a:hover { color: white; }
 
-        .nav-links a:hover { color: var(--red); }
+        .nav-icons { position: absolute; right: 50px; display: flex; gap: 20px; }
+        .nav-icons i { color: white; cursor: pointer; opacity: 0.8; transition: 0.3s; }
+        .nav-icons i:hover { opacity: 1; color: var(--red); }
 
-        /* Logo Pinned Left */
-        .logo {
-            position: absolute;
-            left: 40px;
-            cursor: pointer;
-            z-index: 5001;
-        }
-
-        /* Icons Pinned Top Right */
-        .nav-icons {
-            position: absolute;
-            right: 40px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            z-index: 5001;
-        }
-
-        .nav-icons i {
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .nav-icons i:hover { color: var(--red); }
-
-        /* PAGE SYSTEM */
-        .page { 
-            display: none; 
+        /* CENTERED HOME CONTENT */
+        .page {
+            display: none;
             min-height: 100vh;
             width: 100%;
-            padding-top: 100px;
-            position: relative;
-            z-index: 10;
+            padding-top: 70px;
         }
 
-        .page.active { 
-            display: flex; 
+        .page.active {
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.4s ease forwards;
+            animation: fadeIn 0.6s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* THE LARGE TITLE STYLE */
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 5rem);
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+        }
+        .hero-title span { color: var(--red); }
+
+        .hero-subtitle {
+            color: #777;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
-        /* BUTTONS */
+        /* BUTTONS WITH GLOW */
+        .btn-container { display: flex; gap: 20px; }
+
         .btn-red {
             background: var(--red);
             color: white;
             border: none;
-            padding: 14px 32px;
-            border-radius: 4px;
+            padding: 15px 40px;
             font-weight: bold;
+            border-radius: 5px;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 0 20px rgba(255, 49, 49, 0.4);
             transition: 0.3s;
         }
-
-        .btn-red:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 0, 0.6); }
+        .btn-red:hover { transform: scale(1.05); box-shadow: 0 0 40px rgba(255, 49, 49, 0.6); }
 
         .btn-outline {
             background: transparent;
             color: white;
-            border: 1px solid #444;
-            padding: 14px 32px;
-            border-radius: 4px;
+            border: 1px solid #333;
+            padding: 15px 40px;
             font-weight: bold;
+            border-radius: 5px;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             transition: 0.3s;
         }
+        .btn-outline:hover { background: white; color: black; }
 
-        .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.05); }
-
-        /* PRODUCT GRID */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            width: 90%;
-            margin-top: 40px;
+        /* STAT CARDS */
+        .stat-grid {
+            display: flex;
+            gap: 20px;
+            margin-top: 60px;
         }
 
-        /* MOBILE SUPPORT */
-        @media (max-width: 768px) {
-            nav { padding: 0 20px; }
-            .logo { left: 20px; }
-            .nav-icons { right: 20px; }
-            .nav-links { display: none; } /* Hide text links on mobile */
-            .page { padding-top: 80px; }
-            .btn-red, .btn-outline { width: 100%; margin-bottom: 15px; }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            padding: 30px 40px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 160px;
         }
 
-        /* BACKGROUND ELEMENTS */
-        .hero-glow {
+        .stat-card h3 { font-size: 1.8rem; color: var(--red); margin-bottom: 5px; }
+        .stat-card p { font-size: 0.7rem; color: #555; font-weight: bold; text-transform: uppercase; }
+
+        /* BACKGROUND CENTER GLOW */
+        .glow-sphere {
             position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255,0,0,0.1) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.15) 0%, transparent 70%);
             z-index: -1;
             pointer-events: none;
+        }
+
+        /* MOBILE FIX */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .stat-grid { flex-direction: column; }
+            .btn-container { flex-direction: column; width: 80%; }
+            .btn-red, .btn-outline { width: 100%; }
         }
     </style>
 </head>
@@ -172,7 +166,7 @@
 
     <nav>
         <div class="logo" onclick="showPage('home')">
-            <img src="main.png" alt="Logo" style="height: 30px;">
+            <img src="main.png" alt="Logo">
         </div>
 
         <div class="nav-links">
@@ -183,54 +177,41 @@
         </div>
 
         <div class="nav-icons">
-            <i data-lucide="user" onclick="showPage('dashboard')"></i>
-            <div onclick="toggleCart()" style="position: relative;">
-                <i data-lucide="shopping-cart"></i>
-            </div>
+            <i data-lucide="shopping-cart"></i>
+            <i data-lucide="user"></i>
         </div>
     </nav>
 
     <div id="home" class="page active">
-        <div class="hero-glow"></div>
-        <div style="text-align: center;">
-            <h1 style="font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 800; line-height: 1.1;">
-                MILITARY <span style="color:var(--red)">MARKETPLACE</span>
-            </h1>
-            <p style="color: #888; margin: 20px 0 40px; font-size: 1.1rem; letter-spacing: 1px;">
-                Buy access to the best roblox studio assets
-            </p>
-            
-            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                <button class="btn-red" onclick="showPage('products')">PRODUCTS</button>
-                <button class="btn-outline" onclick="window.open('https://discord.gg/militarymarket')">DISCORD</button>
-            </div>
+        <div class="glow-sphere"></div>
+        
+        <h1 class="hero-title">Military <span>Marketplace</span></h1>
+        <p class="hero-subtitle">Buy access to the best roblox studio assets</p>
 
-            <div style="display: flex; gap: 50px; margin-top: 80px; justify-content: center; flex-wrap: wrap;">
-                <div style="text-align: center;">
-                    <h3 style="font-size: 1.5rem;">114</h3>
-                    <p style="color:#555; font-size: 0.75rem; font-weight: bold;">LOYAL CUSTOMERS</p>
-                </div>
-                <div style="text-align: center;">
-                    <h3 style="font-size: 1.5rem;">24/7</h3>
-                    <p style="color:#555; font-size: 0.75rem; font-weight: bold;">SUPPORT</p>
-                </div>
-                <div style="text-align: center;">
-                    <h3 style="font-size: 1.5rem;">4.98★</h3>
-                    <p style="color:#555; font-size: 0.75rem; font-weight: bold;">RATING</p>
-                </div>
+        <div class="btn-container">
+            <button class="btn-red" onclick="showPage('products')">PRODUCTS</button>
+            <button class="btn-outline" onclick="window.open('https://discord.gg/militarymarket')">DISCORD</button>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <h3>114</h3>
+                <p>Loyal Customers</p>
+            </div>
+            <div class="stat-card">
+                <h3>24/7</h3>
+                <p>Support</p>
+            </div>
+            <div class="stat-card">
+                <h3>4.98★</h3>
+                <p>Rating</p>
             </div>
         </div>
     </div>
 
     <div id="products" class="page">
-        <h2 style="font-size: 2.5rem;">OUR <span style="color:var(--red)">PRODUCTS</span></h2>
-        <div class="product-grid">
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid #222; padding: 40px; border-radius: 8px; text-align: center;">
-                <h3>Product Placeholder</h3>
-                <button class="btn-red" style="margin-top: 20px;">ADD TO CART</button>
-            </div>
+        <h2 class="hero-title">Our <span>Products</span></h2>
         </div>
-    </div>
 
     <script>
         lucide.createIcons();
@@ -240,10 +221,6 @@
             const target = document.getElementById(pageId);
             if(target) target.classList.add('active');
             window.scrollTo(0,0);
-        }
-
-        function toggleCart() {
-            alert("Cart Panel would slide out here!");
         }
     </script>
 </body>
