@@ -137,10 +137,10 @@
 
         <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
             <div style="display:flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold;">
-                <span>Total Items:</span>
-                <span id="cart-total">0</span>
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
             </div>
-            <button class="btn-red" style="width: 100%;" onclick="checkout()">Checkout via Roblox</button>
+            <button class="btn-red" style="width: 100%;" onclick="checkout()">Checkout via Linkl</button>
         </div>
     </div>
 
@@ -154,7 +154,7 @@
                 <a href="https://discord.gg/uW2vENBatG" target="_blank" class="btn-outline">Discord</a>
             </div>
             <div class="stat-grid">
-                <div class="stat-card glass"><div class="stat-number">140</div><div class="stat-label">Loyal Customers</div></div>
+                <div class="stat-card glass"><div class="stat-number">114</div><div class="stat-label">Loyal Customers</div></div>
                 <div class="stat-card glass"><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
                 <div class="stat-card glass"><div class="stat-number">4.98★</div><div class="stat-label">Rating</div></div>
             </div>
@@ -163,38 +163,54 @@
 
     <div id="products" class="page">
         <section class="section">
-            <h2 class="title-glow" style="text-align: center;">Roblox <span style="color:var(--red)">Advertisements</span></h2>
+            <h2 class="title-glow" style="text-align: center;">Roblox <span style="color:var(--red)">Assets</span></h2>
             <div class="product-grid">
                 <div class="product-card glass">
-                    <h3>100 Robux Advertisement</h3>
-                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Standard package for military assets.</p>
+                    <h3>Advanced ACS Kit</h3>
+                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Premium combat system for military games.</p>
                     <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--red); font-weight: bold;">100 R$</span>
-                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('100 R$ Adv', 100, 'https://www.roblox.com/game-pass/836932565')">Add</button>
+                        <span style="color: var(--red); font-weight: bold;">$15.00</span>
+                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('Advanced ACS Kit', 15.00)">Add</button>
+                    </div>
+                </div>
+                <div class="product-card glass">
+                    <h3>Border Map V2</h3>
+                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Highly detailed desert border checkpoint.</p>
+                    <div style="display:flex; justify-content: space-between; align-items: center;">
+                        <span style="color: var(--red); font-weight: bold;">$25.00</span>
+                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('Border Map V2', 25.00)">Add</button>
+                    </div>
+                </div>
+                <div class="product-card glass">
+                    <h3>100 Robux Advertisement</h3>
+                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Boost your visibility with basic advertising.</p>
+                    <div style="display:flex; justify-content: space-between; align-items: center;">
+                        <span style="color: var(--red); font-weight: bold;">$1.25</span>
+                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('100 Robux Advertisement', 1.25)">Add</button>
                     </div>
                 </div>
                 <div class="product-card glass">
                     <h3>200 Robux Advertisement</h3>
-                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Extended reach advertisement package.</p>
+                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Enhanced advertisement package for growth.</p>
                     <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--red); font-weight: bold;">200 R$</span>
-                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('200 R$ Adv', 200, 'https://www.roblox.com/game-pass/837096376')">Add</button>
+                        <span style="color: var(--red); font-weight: bold;">$2.50</span>
+                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('200 Robux Advertisement', 2.50)">Add</button>
                     </div>
                 </div>
                 <div class="product-card glass">
                     <h3>350 Robux Advertisement</h3>
-                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Premium visibility advertisement package.</p>
+                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Premium placement for maximum game reach.</p>
                     <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--red); font-weight: bold;">350 R$</span>
-                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('350 R$ Adv', 350, 'https://www.roblox.com/game-pass/1645928351')">Add</button>
+                        <span style="color: var(--red); font-weight: bold;">$4.35</span>
+                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('350 Robux Advertisement', 4.35)">Add</button>
                     </div>
                 </div>
                 <div class="product-card glass">
                     <h3>500 Robux Advertisement</h3>
-                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Ultimate exposure advertisement package.</p>
+                    <p style="color: #666; font-size: 13px; margin: 10px 0;">Elite advertising tier for top-level games.</p>
                     <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <span style="color: var(--red); font-weight: bold;">500 R$</span>
-                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('500 R$ Adv', 500, 'https://www.roblox.com/game-pass/1646186376')">Add</button>
+                        <span style="color: var(--red); font-weight: bold;">$6.25</span>
+                        <button class="btn-red" style="padding: 8px 15px;" onclick="addToCart('500 Robux Advertisement', 6.25)">Add</button>
                     </div>
                 </div>
             </div>
@@ -240,7 +256,9 @@
     <script>
         lucide.createIcons();
 
+        // CART LOGIC
         let cart = [];
+        const LINKL_URL = "https://link.com/"; // Your Linkl/Linkvertise destination
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -253,8 +271,8 @@
             document.getElementById('cartPanel').classList.toggle('open');
         }
 
-        function addToCart(name, price, link) {
-            cart.push({ name, price, link });
+        function addToCart(name, price) {
+            cart.push({ name, price });
             updateCartUI();
             if(!document.getElementById('cartPanel').classList.contains('open')) toggleCart();
         }
@@ -271,17 +289,19 @@
             const emptyMsg = document.getElementById('empty-msg');
 
             container.innerHTML = '';
-            
+            let total = 0;
+
             if (cart.length === 0) {
                 container.appendChild(emptyMsg);
             } else {
                 cart.forEach((item, index) => {
+                    total += item.price;
                     const div = document.createElement('div');
                     div.className = 'cart-item';
                     div.innerHTML = `
                         <div>
                             <div style="font-size: 14px; font-weight:600;">${item.name}</div>
-                            <div style="color: var(--red); font-size: 12px;">${item.price} R$</div>
+                            <div style="color: var(--red); font-size: 12px;">$${item.price.toFixed(2)}</div>
                         </div>
                         <i data-lucide="trash-2" size="16" style="cursor:pointer; opacity:0.6;" onclick="removeItem(${index})"></i>
                     `;
@@ -290,7 +310,7 @@
             }
 
             countLabel.innerText = cart.length;
-            totalLabel.innerText = cart.length; // Simply showing count for Roblox purchases
+            totalLabel.innerText = `$${total.toFixed(2)}`;
             lucide.createIcons();
         }
 
@@ -299,13 +319,8 @@
                 alert("Your cart is empty!");
                 return;
             }
-            // Opens all gamepass links in new tabs
-            cart.forEach(item => {
-                window.open(item.link, '_blank');
-            });
-            cart = [];
-            updateCartUI();
-            toggleCart();
+            alert("Redirecting to Linkl...");
+            window.location.href = LINKL_URL;
         }
 
         function toggleModal() {
@@ -313,8 +328,4 @@
         }
 
         function closeModal(e) {
-            document.getElementById('loginModal').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('loginModal').style
