@@ -1,0 +1,195 @@
+/* ===== GOOGLE FONT ===== */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap');
+
+:root {
+  --red: #ff1a1a;
+  --dark: #0b0b0f;
+}
+
+/* ===== GLOBAL ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: var(--dark);
+  color: white;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ===== GRID BACKGROUND ===== */
+.grid-bg {
+  background-color: var(--dark);
+  background-image:
+    linear-gradient(rgba(255,0,0,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,0,0,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ===== HERO RED GLOW ===== */
+.hero-glow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,0,0,0.2) 0%, transparent 70%);
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== GLASS CARDS ===== */
+.glass {
+  background: rgba(15, 15, 15, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 0, 0, 0.15);
+  box-shadow: 0 0 40px rgba(255,0,0,0.08);
+  transition: 0.3s ease;
+}
+
+.glass:hover {
+  border-color: rgba(255, 0, 0, 0.4);
+  transform: translateY(-5px);
+}
+
+/* ===== BUTTONS ===== */
+.btn-red {
+  background: var(--red);
+  color: white;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.25s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-red:hover {
+  box-shadow: 0 0 25px var(--red);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 0, 0, 0.4);
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(255,0,0,0.4);
+}
+
+/* ===== UTILITIES ===== */
+.banner {
+  background: var(--red);
+  text-align: center;
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-links a {
+  margin: 0 20px;
+  color: #888;
+  font-size: 14px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--red);
+}
+
+.title-glow {
+  font-size: 72px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-shadow: 0 0 30px rgba(255,0,0,0.3);
+}
+
+.subtitle {
+  color: #666;
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: 60px auto;
+}
+
+.stat-card {
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--red);
+}
+
+.stat-label {
+  color: #555;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.section {
+  padding: 100px 20px;
+  text-align: center;
+  position: relative;
+}
+
+/* ===== LOGO STYLING ===== */
+.logo {
+    display: flex;
+    align-items: center;
+    height: 40px; /* Adjust this height based on your preference */
+    transition: transform 0.3s ease;
+}
+
+.logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    /* Optional: adds a slight glow to your logo image */
+    filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.3));
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
